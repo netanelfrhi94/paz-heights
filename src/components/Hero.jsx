@@ -7,7 +7,7 @@ const WA    = '0535230998'
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 36 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] },
+  transition: { duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] },
 })
 
 function useCounter(target, duration = 2000, start = false) {
@@ -31,7 +31,7 @@ function useCounter(target, duration = 2000, start = false) {
 export default function Hero() {
   const [countersStarted, setCountersStarted] = useState(false)
   useEffect(() => {
-    const timer = setTimeout(() => setCountersStarted(true), 800)
+    const timer = setTimeout(() => setCountersStarted(true), 900)
     return () => clearTimeout(timer)
   }, [])
 
@@ -40,150 +40,118 @@ export default function Hero() {
   const clients  = useCounter(98,  2000, countersStarted)
 
   return (
-    <section className="relative min-h-screen flex overflow-hidden bg-pg-bg">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-pg-bg">
 
-      {/* RIGHT PANEL — content (RTL: this is visually on the right side) */}
-      <div className="w-full lg:w-[48%] flex flex-col justify-center relative z-10 px-6 md:px-12 lg:px-16 pt-36 pb-20 lg:pt-44 lg:pb-24">
-
-        {/* Eyebrow */}
-        <motion.div {...fadeUp(0.1)} className="flex items-center gap-3 mb-10">
-          <span className="block w-10 h-px bg-pg-gold flex-shrink-0" />
-          <span className="section-num tracking-[0.25em] uppercase text-pg-gold/60">
-            בנייה קלה &nbsp;|&nbsp; שיפוצים &nbsp;|&nbsp; מחסנים
-          </span>
-        </motion.div>
-
-        {/* H1 — three lines */}
-        <motion.h1
-          {...fadeUp(0.2)}
-          className="text-display text-pg-text mb-8 max-w-lg"
-          style={{ fontWeight: 800 }}
-        >
-          בונים ללא פשרות.<br />
-          <span className="text-pg-gold">מוסרים ביום</span><br />
-          שהובטח.
-        </motion.h1>
-
-        {/* Sub paragraph */}
-        <motion.p {...fadeUp(0.3)} className="text-base text-pg-dim leading-[1.8] max-w-md mb-10">
-          עסק משפחתי בניהול שלושה אחים — לוחמי מילואים — שבונה לכם
-          מחסנים, משרדים, קליניקות ומבנים בהתאמה מלאה.
-          בלי קיצורי דרך. בלי הפתעות. בלוח זמנים מחייב.
-        </motion.p>
-
-        {/* Stats row */}
-        <motion.div {...fadeUp(0.38)} className="flex items-stretch gap-0 mb-12 border border-white/6 rounded-xl overflow-hidden max-w-sm">
-          <div className="flex-1 px-5 py-4 text-center border-l border-white/6">
-            <div className="text-2xl font-black text-pg-text leading-none">
-              {projects}<span className="text-pg-gold text-lg">+</span>
-            </div>
-            <div className="text-[11px] text-pg-mute mt-1.5 tracking-wide">פרויקטים</div>
-          </div>
-          <div className="flex-1 px-5 py-4 text-center border-l border-white/6">
-            <div className="text-2xl font-black text-pg-text leading-none">{years}</div>
-            <div className="text-[11px] text-pg-mute mt-1.5 tracking-wide">שנות ניסיון</div>
-          </div>
-          <div className="flex-1 px-5 py-4 text-center">
-            <div className="text-2xl font-black text-pg-text leading-none">
-              {clients}<span className="text-pg-gold text-lg">%</span>
-            </div>
-            <div className="text-[11px] text-pg-mute mt-1.5 tracking-wide">ממליצים</div>
-          </div>
-        </motion.div>
-
-        {/* CTAs */}
-        <motion.div {...fadeUp(0.46)} className="flex flex-col sm:flex-row gap-3 mb-10">
-          <a
-            href="#lead"
-            className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-lg btn-shimmer text-[#1A1305] font-bold text-[15px] shadow-[0_8px_32px_rgba(201,162,75,0.35)] hover:shadow-[0_12px_40px_rgba(201,162,75,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-          >
-            לייעוץ חינמי
-            <ArrowIcon />
-          </a>
-          <a
-            href="#gallery"
-            className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-lg border border-white/12 text-pg-text font-semibold text-[15px] hover:border-pg-gold/35 hover:bg-white/[0.03] transition-all duration-200"
-          >
-            לפרויקטים
-          </a>
-        </motion.div>
-
-        {/* Trust line */}
-        <motion.div {...fadeUp(0.54)} className="flex items-center gap-2.5">
-          <span className="w-2 h-2 rounded-full bg-pg-gold animate-pulse flex-shrink-0" />
-          <span className="text-[13px] text-pg-mute">
-            3 מקומות פנויים לחודש הקרוב
-          </span>
-        </motion.div>
-
-        {/* Scroll indicator — desktop only */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="hidden lg:flex flex-col items-center gap-2 absolute bottom-8 left-1/2 -translate-x-1/2 animate-scroll pointer-events-none"
-        >
-          <div className="w-px h-10 bg-gradient-to-b from-pg-gold/50 to-transparent" />
-          <div className="text-[9px] text-pg-mute tracking-[0.2em] uppercase">גלול</div>
-        </motion.div>
-      </div>
-
-      {/* LEFT PANEL — full-bleed image (hidden on mobile) */}
-      <div className="hidden lg:block lg:w-[52%] relative overflow-hidden">
-        {/* Mobile image above content */}
-        <img
-          src="/images/hero.jpeg"
-          alt="פז גבהים — פרויקט בנייה"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          loading="eager"
-        />
-
-        {/* Gradient overlay — fades into the content panel on the right */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'linear-gradient(to right, rgba(10,14,20,0.35) 0%, transparent 40%)' }}
-        />
-
-        {/* Architectural corner annotation */}
-        <div className="absolute top-10 right-10 pointer-events-none select-none">
-          <div className="relative w-14 h-14">
-            <div className="absolute top-0 right-0 w-full h-px bg-pg-gold/50" />
-            <div className="absolute top-0 right-0 w-px h-full bg-pg-gold/50" />
-          </div>
-          <div className="text-[9px] text-pg-gold/40 tracking-[0.2em] mt-2 font-mono">31.05°N 34.75°E</div>
-        </div>
-
-        {/* Bottom-left watermark */}
-        <div className="absolute bottom-10 left-10 pointer-events-none select-none">
-          <div className="text-[11px] text-white/15 tracking-[0.3em] font-bold">2012 — 2026</div>
-          <div className="w-8 h-px bg-pg-gold/20 mt-2" />
-        </div>
-
-        {/* Bottom-right corner annotation */}
-        <div className="absolute bottom-10 right-10 pointer-events-none select-none">
-          <div className="relative w-10 h-10">
-            <div className="absolute bottom-0 right-0 w-full h-px bg-pg-gold/40" />
-            <div className="absolute bottom-0 right-0 w-px h-full bg-pg-gold/40" />
-          </div>
-        </div>
-      </div>
-
-      {/* MOBILE — hero image above content (stacks vertically) */}
+      {/* Full-bleed background image */}
       <div
-        className="lg:hidden absolute top-0 inset-x-0 pointer-events-none"
-        style={{ height: '60vw' }}
-      >
-        <img
-          src="/images/hero.jpeg"
-          alt="פז גבהים — פרויקט בנייה"
-          className="w-full h-full object-cover object-center"
-          loading="eager"
-        />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, transparent 40%, #0A0E14 100%)' }} />
+        className="absolute inset-0 bg-cover bg-center scale-[1.03] transition-transform duration-[8s] ease-out"
+        style={{ backgroundImage: 'url(/images/hero.jpeg)', backgroundPosition: 'center 35%' }}
+      />
+
+      {/* Layered overlays — rich, dark, directional */}
+      <div className="absolute inset-0 bg-gradient-to-b from-pg-bg/75 via-pg-bg/45 to-pg-bg/95" />
+      <div className="absolute inset-0 bg-gradient-to-l from-transparent via-pg-bg/30 to-pg-bg/90" />
+      <div className="absolute inset-0 bg-gradient-to-t from-pg-bg via-transparent to-transparent" />
+
+      {/* Gold ambient orbs */}
+      <div className="absolute top-1/3 right-1/4 w-[700px] h-[700px] bg-pg-gold/[0.035] rounded-full blur-[140px] pointer-events-none animate-orb" />
+      <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-pg-gold/[0.025] rounded-full blur-[100px] pointer-events-none animate-float-slow" />
+
+      {/* Architectural corner frames */}
+      <div className="absolute top-28 left-10 pointer-events-none select-none hidden lg:block">
+        <div className="relative w-12 h-12">
+          <div className="absolute top-0 left-0 w-full h-px bg-pg-gold/30" />
+          <div className="absolute top-0 left-0 w-px h-full bg-pg-gold/30" />
+        </div>
+        <div className="text-[9px] text-pg-gold/30 tracking-[0.2em] mt-2 font-mono">31.05°N</div>
+      </div>
+      <div className="absolute bottom-20 right-10 pointer-events-none select-none hidden lg:block">
+        <div className="text-[9px] text-pg-gold/30 tracking-[0.2em] mb-2 font-mono text-left">34.75°E</div>
+        <div className="relative w-12 h-12">
+          <div className="absolute bottom-0 right-0 w-full h-px bg-pg-gold/30" />
+          <div className="absolute bottom-0 right-0 w-px h-full bg-pg-gold/30" />
+        </div>
       </div>
 
-      {/* Dark fade at bottom */}
-      <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-pg-bg to-transparent pointer-events-none" />
+      {/* Content */}
+      <div className="relative z-10 container-lg px-5 md:px-12 pt-32 pb-24">
+        <div className="max-w-2xl">
+
+          {/* Eyebrow */}
+          <motion.div {...fadeUp(0.1)} className="flex items-center gap-3 mb-8">
+            <span className="block w-10 h-px bg-pg-gold flex-shrink-0" />
+            <span className="text-[11px] font-semibold text-pg-gold/70 tracking-[0.28em] uppercase">
+              בנייה קלה · שיפוצים · מחסנים
+            </span>
+          </motion.div>
+
+          {/* H1 */}
+          <motion.h1 {...fadeUp(0.2)} className="text-display text-pg-text mb-7">
+            בונים ללא פשרות.<br />
+            <span className="text-pg-gold">מוסרים ביום</span><br />
+            שהובטח.
+          </motion.h1>
+
+          {/* Sub */}
+          <motion.p {...fadeUp(0.32)} className="text-[17px] text-pg-dim leading-[1.85] max-w-xl mb-12">
+            עסק משפחתי בניהול שלושה אחים — מחסנים, משרדים,
+            קליניקות ושיפוצים. לוח זמנים מחייב, תמחור שקוף,
+            אחריות בכתב.
+          </motion.p>
+
+          {/* Stats */}
+          <motion.div {...fadeUp(0.42)} className="flex items-stretch gap-0 mb-12 w-fit border border-white/8 rounded-xl overflow-hidden backdrop-blur-sm bg-pg-bg/30">
+            {[
+              { val: projects, suffix: '+', label: 'פרויקטים' },
+              { val: years,    suffix: '',  label: 'שנות ניסיון' },
+              { val: clients,  suffix: '%', label: 'ממליצים' },
+            ].map((s, i) => (
+              <div key={i} className={`px-8 py-5 text-center ${i < 2 ? 'border-l border-white/8' : ''}`}>
+                <div className="text-[28px] font-black text-pg-text leading-none tracking-tight">
+                  {s.val}<span className="text-pg-gold text-xl">{s.suffix}</span>
+                </div>
+                <div className="text-[11px] text-pg-mute mt-2 tracking-wide">{s.label}</div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div {...fadeUp(0.52)} className="flex flex-col sm:flex-row gap-3 mb-10">
+            <a
+              href="#lead"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl btn-shimmer text-[#1A1305] font-bold text-[15px] shadow-[0_8px_32px_rgba(201,162,75,0.4)] hover:shadow-[0_16px_48px_rgba(201,162,75,0.55)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+            >
+              לייעוץ חינמי
+              <ArrowIcon />
+            </a>
+            <a
+              href="#gallery"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl border border-white/15 text-pg-text font-semibold text-[15px] backdrop-blur-sm hover:border-pg-gold/40 hover:bg-white/[0.04] transition-all duration-200"
+            >
+              לפרויקטים
+            </a>
+          </motion.div>
+
+          {/* Trust line */}
+          <motion.div {...fadeUp(0.62)} className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-pg-gold animate-pulse flex-shrink-0" />
+            <span className="text-[13px] text-pg-mute">
+              3 מקומות פנויים לחודש הקרוב
+            </span>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-scroll pointer-events-none"
+      >
+        <div className="w-px h-10 bg-gradient-to-b from-pg-gold/40 to-transparent" />
+        <div className="text-[9px] text-pg-mute/60 tracking-[0.25em] uppercase">גלול</div>
+      </motion.div>
     </section>
   )
 }

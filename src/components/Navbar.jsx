@@ -25,7 +25,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Announcement banner */}
+      {/* Announcement banner — refined */}
       <AnimatePresence>
         {banner && (
           <motion.div
@@ -33,19 +33,21 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 inset-x-0 z-[60] bg-pg-gold overflow-hidden"
+            className="fixed top-0 inset-x-0 z-[60] overflow-hidden"
+            style={{ background: 'linear-gradient(90deg, #9C7B33 0%, #C9A24B 50%, #9C7B33 100%)' }}
           >
-            <div className="container-lg px-5 py-2 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3 text-[#1A1305] text-xs font-bold">
-                <span className="w-2 h-2 rounded-full bg-[#1A1305]/40 animate-pulse shrink-0" />
-                <span>⚡ 3 פרויקטים פנויים לחודש הקרוב — הזדמנות מוגבלת</span>
-                <a href="#lead" className="hidden sm:inline underline underline-offset-2 hover:opacity-70 transition-opacity">
-                  קבעו ייעוץ עכשיו ←
+            <div className="container-lg px-5 md:px-12 py-2 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3 text-[#1A1305] text-[11px] font-semibold tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#1A1305]/50 animate-pulse shrink-0" />
+                <span>3 פרויקטים פנויים לחודש הקרוב — הזדמנות מוגבלת</span>
+                <a href="#lead" className="hidden sm:inline opacity-70 hover:opacity-100 transition-opacity border-b border-[#1A1305]/40 pb-px">
+                  קבעו ייעוץ עכשיו
                 </a>
               </div>
               <button
                 onClick={() => setBanner(false)}
-                className="text-[#1A1305]/60 hover:text-[#1A1305] text-lg leading-none transition-colors shrink-0"
+                className="text-[#1A1305]/50 hover:text-[#1A1305] text-sm leading-none transition-colors shrink-0 w-5 h-5 flex items-center justify-center"
+                aria-label="סגור הודעה"
               >
                 ✕
               </button>
@@ -57,38 +59,41 @@ export default function Navbar() {
       <header
         className={`fixed inset-x-0 z-50 transition-all duration-500 ${banner ? 'top-8' : 'top-0'} ${
           scrolled
-            ? 'bg-pg-bg/96 backdrop-blur-xl border-b border-white/6 shadow-[0_8px_40px_rgba(0,0,0,0.5)]'
-            : 'bg-transparent'
+            ? 'bg-pg-bg/96 backdrop-blur-xl border-b border-white/5 shadow-[0_8px_40px_rgba(0,0,0,0.5)]'
+            : 'bg-transparent border-b border-transparent'
         }`}
       >
         <div className="container-lg flex items-center justify-between px-5 md:px-12 py-4">
 
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3 group">
+          <a href="#" className="flex items-center gap-3.5 group">
             <div className="relative">
-              <svg width="38" height="38" viewBox="0 0 36 36" fill="none" className="shrink-0">
-                <rect x="1" y="1" width="34" height="34" rx="9" stroke="#C9A24B" strokeWidth="1" opacity="0.4"/>
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="shrink-0">
+                <rect x="1" y="1" width="34" height="34" rx="9" stroke="#C9A24B" strokeWidth="0.75" opacity="0.5"/>
                 <rect x="7"  y="21" width="3.5" height="8"  fill="#C9A24B"/>
                 <rect x="13" y="15" width="3.5" height="14" fill="#C9A24B"/>
                 <rect x="19" y="8"  width="3.5" height="21" fill="#C9A24B"/>
-                <rect x="25" y="15" width="3.5" height="14" fill="#C9A24B" opacity="0.45"/>
+                <rect x="25" y="15" width="3.5" height="14" fill="#C9A24B" opacity="0.4"/>
               </svg>
-              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ boxShadow: '0 0 20px rgba(201,162,75,0.35)' }} />
+              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ boxShadow: '0 0 24px rgba(201,162,75,0.3)' }} />
             </div>
             <div>
-              <div className="text-lg font-extrabold text-pg-text leading-none tracking-tight group-hover:text-pg-goldHi transition-colors duration-300">פז גבהים</div>
-              <div className="text-[9px] text-pg-gold font-bold tracking-[0.2em] mt-0.5">BUILD · ELEVATE</div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-[17px] font-extrabold text-pg-text leading-none tracking-tight group-hover:text-pg-goldHi transition-colors duration-300">פז גבהים</span>
+                <span className="text-[9px] font-semibold text-pg-mute tracking-[0.15em] hidden sm:inline">EST. 2012</span>
+              </div>
+              <div className="text-[8px] text-pg-gold/70 font-bold tracking-[0.25em] mt-1 uppercase">Build · Elevate</div>
             </div>
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-7" aria-label="ניווט ראשי">
+          <nav className="hidden md:flex items-center gap-8" aria-label="ניווט ראשי">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                className="text-sm font-medium text-pg-dim hover:text-pg-text transition-colors duration-200 relative group"
+                className="text-[13px] font-medium text-pg-mute hover:text-pg-text transition-colors duration-200 relative group tracking-wide"
               >
                 {l.label}
                 <span className="absolute -bottom-0.5 inset-x-0 h-px bg-pg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
@@ -97,19 +102,20 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5">
             <a
               href={`https://wa.me/972${WA}`}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366]/10 border border-[#25D366]/25 text-[#25D366] text-sm font-bold hover:bg-[#25D366]/20 transition-all duration-200"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366]/8 border border-[#25D366]/20 text-[#25D366] text-[13px] font-semibold hover:bg-[#25D366]/15 transition-all duration-200"
             >
               <WADot />
               וואטסאפ
             </a>
             <a
               href={`tel:${PHONE}`}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-pg-gold text-[#1A1305] text-sm font-bold hover:bg-pg-goldHi transition-colors duration-200 shadow-[0_4px_16px_rgba(201,162,75,0.3)]"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pg-gold text-[#1A1305] text-[13px] font-bold hover:bg-pg-goldHi transition-colors duration-200"
+              style={{ boxShadow: '0 2px 12px rgba(201,162,75,0.25)' }}
             >
-              <PhoneIcon className="w-3.5 h-3.5" />
+              <PhoneIcon className="w-3 h-3" />
               <span dir="ltr">{PHONE}</span>
             </a>
           </div>
@@ -117,22 +123,22 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-xl hover:bg-white/5 transition"
+            className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 rounded-lg hover:bg-white/5 transition"
             aria-label={menuOpen ? 'סגור תפריט' : 'פתח תפריט'}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
           >
             <motion.span
               animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 7 : 0 }}
-              className="block w-5 h-0.5 bg-pg-text origin-center"
+              className="block w-5 h-px bg-pg-text origin-center"
             />
             <motion.span
               animate={{ opacity: menuOpen ? 0 : 1, scaleX: menuOpen ? 0 : 1 }}
-              className="block w-5 h-0.5 bg-pg-text origin-center"
+              className="block w-5 h-px bg-pg-text origin-center"
             />
             <motion.span
               animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? -7 : 0 }}
-              className="block w-5 h-0.5 bg-pg-text origin-center"
+              className="block w-5 h-px bg-pg-text origin-center"
             />
           </button>
         </div>
@@ -146,37 +152,37 @@ export default function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="md:hidden overflow-hidden bg-pg-bg/98 backdrop-blur-xl border-t border-white/6"
+              className="md:hidden overflow-hidden bg-pg-bg/98 backdrop-blur-xl border-t border-white/5"
               role="navigation"
               aria-label="תפריט ניווט נייד"
             >
-              <div className="px-5 pb-6 pt-3 flex flex-col gap-1">
+              <div className="px-5 pb-6 pt-2 flex flex-col gap-0">
                 {links.map((l, i) => (
                   <motion.a
                     key={l.href}
                     href={l.href}
-                    initial={{ opacity: 0, x: 12 }}
+                    initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
                     onClick={() => setMenuOpen(false)}
-                    className="py-3.5 text-base font-medium text-pg-dim hover:text-pg-text border-b border-white/6 transition-colors flex items-center justify-between"
+                    className="py-3.5 text-[15px] font-medium text-pg-dim hover:text-pg-text border-b border-white/5 transition-colors flex items-center justify-between"
                   >
                     {l.label}
-                    <span className="text-pg-gold/50 text-sm">←</span>
+                    <span className="text-pg-gold/40 text-xs">←</span>
                   </motion.a>
                 ))}
                 <div className="flex gap-2 mt-5">
                   <a
                     href={`tel:${PHONE}`}
-                    className="flex-1 text-center py-3.5 rounded-xl bg-pg-gold text-[#1A1305] font-bold text-sm shadow-[0_8px_20px_rgba(201,162,75,0.3)]"
+                    className="flex-1 text-center py-3 rounded-lg bg-pg-gold text-[#1A1305] font-bold text-sm"
                   >
-                    📞 התקשרו
+                    התקשרו
                   </a>
                   <a
                     href={`https://wa.me/972${WA}`}
-                    className="flex-1 text-center py-3.5 rounded-xl bg-[#25D366] text-[#072B17] font-bold text-sm"
+                    className="flex-1 text-center py-3 rounded-lg bg-[#25D366] text-[#072B17] font-bold text-sm"
                   >
-                    💬 וואטסאפ
+                    וואטסאפ
                   </a>
                 </div>
               </div>
@@ -198,7 +204,7 @@ function PhoneIcon({ className }) {
 
 function WADot() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="#25D366">
       <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24z"/>
     </svg>
   )

@@ -16,6 +16,9 @@ export default {
           gold:      '#C9A24B',
           goldHi:    '#E5C57A',
           goldDeep:  '#9C7B33',
+          warm:      '#F0EBE1',
+          iron:      '#1C2130',
+          brass:     '#A8893A',
         },
       },
       fontFamily: {

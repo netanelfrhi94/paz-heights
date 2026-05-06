@@ -18,64 +18,62 @@ export default function Services() {
     <section id="services" className="bg-pg-bg section-pad">
       <div className="container-lg">
         <SectionTitle
+          num="001"
           eyebrow="התמחויות הבית"
           title="מה אנחנו בונים."
           sub="פתרונות אחסון, משרדים, קליניקות, מחסנים ושיפוצים — בהתאמה אישית מלאה."
         />
-        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        {/* Hover-reveal list */}
+        <div ref={ref}>
           {services.map((s, i) => (
-            <motion.article
+            <motion.a
               key={s.t}
-              initial={{ opacity: 0, y: 28 }}
+              href="#lead"
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.55, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              className="relative bg-pg-surface border border-white/8 rounded-2xl p-8 flex flex-col min-h-[280px] group hover:border-pg-gold/30 hover:bg-pg-surfaceHi transition-all duration-300 overflow-hidden"
+              transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              className="group flex items-center justify-between py-7 border-b border-white/6 cursor-pointer relative block"
+              style={{ textDecoration: 'none' }}
             >
-              {/* Watermark number */}
-              <div className="absolute -top-5 -left-2 text-[130px] font-black text-white/[0.03] leading-none select-none pointer-events-none">
-                0{i + 1}
-              </div>
+              {/* Hover bg */}
+              <div className="absolute inset-0 bg-pg-iron/0 group-hover:bg-pg-iron/50 transition-colors duration-300 -mx-4 px-4 rounded-lg pointer-events-none" />
 
-              {/* Blueprint mini-visual */}
-              <div className="w-full h-20 rounded-xl bg-gradient-to-br from-pg-surfaceHi to-pg-bgAlt border border-white/8 mb-6 relative overflow-hidden flex items-center justify-center opacity-60 group-hover:opacity-80 transition-opacity">
-                <BlueprintSVG index={i} />
-              </div>
-
-              {s.tag && (
-                <span className="absolute top-5 left-5 text-[10px] font-bold tracking-widest bg-pg-gold text-[#1A1305] px-2.5 py-1 rounded-full">
-                  {s.tag}
+              {/* Left: index + title + description */}
+              <div className="flex items-start gap-8 flex-1 relative z-10">
+                <span className="text-[11px] font-bold text-pg-gold/25 tracking-widest mt-1 shrink-0 w-6 group-hover:text-pg-gold/50 transition-colors duration-300">
+                  {String(i + 1).padStart(2, '0')}
                 </span>
-              )}
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-0">
+                    <h3 className="text-2xl font-bold text-pg-text group-hover:text-pg-gold transition-colors duration-300 tracking-tight">
+                      {s.t}
+                    </h3>
+                    {s.tag && (
+                      <span className="text-[10px] font-bold tracking-widest bg-pg-gold/15 text-pg-gold border border-pg-gold/25 px-2.5 py-0.5 rounded-full">
+                        {s.tag}
+                      </span>
+                    )}
+                  </div>
+                  {/* Description — hover reveal */}
+                  <div className="max-h-0 overflow-hidden group-hover:max-h-24 transition-all duration-300 ease-in-out">
+                    <p className="text-sm text-pg-dim leading-relaxed pt-2">{s.d}</p>
+                  </div>
+                </div>
+              </div>
 
-              <h3 className="text-xl font-bold text-pg-text tracking-tight mb-3">{s.t}</h3>
-              <p className="text-sm text-pg-dim leading-relaxed flex-1">{s.d}</p>
-              <a
-                href="#lead"
-                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-pg-gold hover:text-pg-goldHi transition-colors"
-              >
-                לפרטים והצעת מחיר ←
-              </a>
-            </motion.article>
+              {/* Right: arrow */}
+              <div className="relative z-10 opacity-0 group-hover:opacity-100 -translate-x-3 group-hover:translate-x-0 transition-all duration-300 shrink-0 mr-4">
+                <div className="w-9 h-9 rounded-full border border-pg-gold/30 flex items-center justify-center">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A24B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </div>
+              </div>
+            </motion.a>
           ))}
         </div>
       </div>
     </section>
-  )
-}
-
-function BlueprintSVG({ index }) {
-  const stroke = '#C9A24B'
-  const svgs = [
-    <><rect x="20" y="40" width="260" height="50" fill="none" stroke={stroke} strokeWidth="1"/><polygon points="20,40 150,15 280,40" fill="none" stroke={stroke} strokeWidth="1"/></>,
-    <><rect x="40" y="30" width="220" height="60" fill="none" stroke={stroke} strokeWidth="1"/><rect x="50" y="50" width="20" height="30" fill={stroke} opacity="0.4"/></>,
-    <><rect x="30" y="25" width="240" height="65" rx="6" fill="none" stroke={stroke} strokeWidth="1"/><circle cx="80" cy="58" r="14" fill="none" stroke={stroke} strokeWidth="1"/></>,
-    <><polygon points="40,80 40,40 100,20 160,40 160,80" fill="none" stroke={stroke} strokeWidth="1"/><polygon points="160,80 160,40 220,20 280,40 280,80" fill="none" stroke={stroke} strokeWidth="1" opacity="0.6"/></>,
-    <><rect x="30" y="30" width="240" height="60" fill="none" stroke={stroke} strokeWidth="1"/><line x1="30" y1="55" x2="270" y2="55" stroke={stroke} strokeWidth="0.5" strokeDasharray="4 2"/></>,
-    <><rect x="50" y="50" width="40" height="40" fill="none" stroke={stroke} strokeWidth="1"/><rect x="100" y="35" width="50" height="55" fill="none" stroke={stroke} strokeWidth="1"/><rect x="160" y="20" width="60" height="70" fill="none" stroke={stroke} strokeWidth="1"/></>,
-  ]
-  return (
-    <svg width="100%" height="100%" viewBox="0 0 300 100" preserveAspectRatio="none" style={{ opacity: 0.5 }}>
-      {svgs[index]}
-    </svg>
   )
 }

@@ -14,16 +14,32 @@ export default function Process() {
     <section id="process" className="bg-pg-bgAlt section-pad">
       <div className="container-lg">
         <SectionTitle
+          num="003"
           eyebrow="התהליך"
           title="חמישה שלבים. בלי משחקים."
         />
 
         {/* Desktop horizontal */}
         <div className="hidden md:block relative">
-          {/* Connector line */}
-          <div className="absolute top-9 right-[4%] left-[4%] h-px bg-gradient-to-l from-transparent via-pg-gold/40 to-transparent" />
+          {/* Progressive gold top line */}
+          <div className="flex gap-4 mb-0 relative">
+            {steps.map((s, i) => (
+              <motion.div
+                key={s.n + '-bar'}
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                className="flex-1 h-px origin-right"
+                style={{
+                  background: `linear-gradient(to left, rgba(201,162,75,${0.15 + i * 0.18}) 0%, rgba(201,162,75,${0.08 + i * 0.1}) 100%)`,
+                  marginBottom: 0,
+                }}
+              />
+            ))}
+          </div>
 
-          <div className="grid grid-cols-5 gap-4 relative">
+          <div className="grid grid-cols-5 gap-4 pt-10 relative">
             {steps.map((s, i) => (
               <motion.div
                 key={s.n}
@@ -31,17 +47,16 @@ export default function Process() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="text-right"
+                className="text-right group"
               >
-                {/* Circle */}
-                <div className="relative w-[72px] h-[72px] rounded-full bg-pg-surface border border-white/12 flex items-center justify-center mb-6 group-hover:border-pg-gold/40 transition-colors">
-                  <span className="text-2xl font-black text-pg-gold tracking-tight">{s.n}</span>
-                  <div className="absolute -inset-1 rounded-full border border-dashed border-pg-gold/20" />
+                {/* Large step number */}
+                <div className="text-5xl font-black text-pg-gold leading-none mb-5 group-hover:text-pg-goldHi transition-colors duration-300">
+                  {s.n}
                 </div>
 
                 <h4 className="text-base font-bold text-pg-text tracking-tight mb-2">{s.t}</h4>
-                <p className="text-xs text-pg-dim leading-relaxed">{s.d}</p>
-                <div className="mt-3 text-[10px] font-bold text-pg-gold tracking-widest uppercase">{s.dur}</div>
+                <p className="text-[13px] text-pg-dim leading-relaxed">{s.d}</p>
+                <div className="mt-3 text-[9px] font-bold text-pg-gold/60 tracking-[0.2em] uppercase">{s.dur}</div>
               </motion.div>
             ))}
           </div>
@@ -52,24 +67,26 @@ export default function Process() {
           {steps.map((s, i) => (
             <motion.div
               key={s.n}
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="flex gap-5 pb-8 relative"
+              className="flex gap-6 pb-8 relative"
             >
-              {/* Line */}
+              {/* Connector line */}
               {i < steps.length - 1 && (
-                <div className="absolute top-14 right-6 bottom-0 w-px bg-gradient-to-b from-pg-gold/30 to-transparent" />
+                <div className="absolute top-12 right-5 bottom-0 w-px bg-gradient-to-b from-pg-gold/20 to-transparent" />
               )}
-              {/* Circle */}
-              <div className="w-12 h-12 rounded-full bg-pg-surface border border-white/12 flex items-center justify-center shrink-0 text-pg-gold font-black text-sm">
-                {s.n}
+
+              {/* Step number */}
+              <div className="shrink-0 w-10 text-right">
+                <span className="text-3xl font-black text-pg-gold leading-none">{s.n}</span>
               </div>
-              <div>
-                <h4 className="text-base font-bold text-pg-text mb-1">{s.t}</h4>
+
+              <div className="pt-0.5">
+                <h4 className="text-[15px] font-bold text-pg-text mb-1.5">{s.t}</h4>
                 <p className="text-sm text-pg-dim leading-relaxed">{s.d}</p>
-                <div className="mt-2 text-[10px] font-bold text-pg-gold tracking-widest uppercase">{s.dur}</div>
+                <div className="mt-2.5 text-[9px] font-bold text-pg-gold/60 tracking-[0.2em] uppercase">{s.dur}</div>
               </div>
             </motion.div>
           ))}

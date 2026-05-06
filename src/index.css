@@ -152,3 +152,12 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Architectural divider */
+.arch-divider { width: 48px; height: 1px; background: #C9A24B; display: inline-block; margin-bottom: 24px; }
+/* Section number */
+.section-num { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; color: rgba(201,162,75,0.5); font-variant-numeric: tabular-nums; }
+/* Editorial large text */
+.text-display { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+/* Precision thin border */
+.border-arch { border: 1px solid rgba(255,255,255,0.06); }

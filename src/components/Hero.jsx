@@ -35,9 +35,10 @@ export default function Hero() {
     return () => clearTimeout(timer)
   }, [])
 
-  const projects = useCounter(120, 2200, countersStarted)
-  const years    = useCounter(12,  1800, countersStarted)
-  const clients  = useCounter(98,  2000, countersStarted)
+  const guarantee = useCounter(100, 2000, countersStarted)
+  const years     = useCounter(12,  1800, countersStarted)
+  const clients   = useCounter(98,  2000, countersStarted)
+  const response  = useCounter(30,  1600, countersStarted)
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-pg-bg">
@@ -118,11 +119,12 @@ export default function Hero() {
           {/* Stats bar */}
           <motion.div {...fadeUp(0.54)} className="flex items-stretch gap-0 w-fit border border-white/8 rounded-xl overflow-hidden backdrop-blur-sm bg-pg-bg/30">
             {[
-              { val: projects, suffix: '+', label: 'פרויקטים' },
-              { val: years,    suffix: '',  label: 'שנות ניסיון' },
-              { val: clients,  suffix: '%', label: 'ממליצים' },
+              { val: guarantee, suffix: '%', label: 'אחריות מובטחת' },
+              { val: years,     suffix: '',  label: 'שנות אמינות'   },
+              { val: clients,   suffix: '%', label: 'ממליצים'        },
+              { val: response,  suffix: '′', label: 'מענה מהיר'      },
             ].map((s, i) => (
-              <div key={i} className={`px-8 py-5 text-center ${i < 2 ? 'border-l border-white/8' : ''}`}>
+              <div key={i} className={`px-6 py-5 text-center ${i < 3 ? 'border-l border-white/8' : ''}`}>
                 <div className="text-[28px] font-black text-pg-text leading-none tracking-tight">
                   {s.val}<span className="text-pg-gold text-xl">{s.suffix}</span>
                 </div>

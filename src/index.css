@@ -3,57 +3,125 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    direction: rtl;
-    scroll-behavior: smooth;
-  }
-  body {
-    @apply bg-pg-bg text-pg-text font-sans antialiased;
-  }
-  * {
-    box-sizing: border-box;
-  }
+  html { direction: rtl; scroll-behavior: smooth; }
+  body { @apply bg-pg-bg text-pg-text font-sans antialiased; }
+  * { box-sizing: border-box; }
 }
 
 @layer utilities {
   .text-gradient-gold {
-    background: linear-gradient(180deg, #E5C57A 0%, #9C7B33 100%);
+    background: linear-gradient(135deg, #E5C57A 0%, #C9A24B 50%, #9C7B33 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  .section-pad { @apply px-5 py-24 md:px-12 lg:px-20 lg:py-36; }
+  .container-lg { @apply max-w-7xl mx-auto; }
+
+  .gold-glow {
+    box-shadow: 0 0 40px rgba(201,162,75,0.25), 0 0 80px rgba(201,162,75,0.1);
   }
-  .section-pad {
-    @apply px-5 py-20 md:px-12 lg:px-20 lg:py-32;
+  .gold-glow-sm {
+    box-shadow: 0 0 20px rgba(201,162,75,0.2);
   }
-  .container-lg {
-    @apply max-w-7xl mx-auto;
+  .card-hover {
+    @apply transition-all duration-500;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,162,75,0.2);
   }
 }
 
-/* Scroll reveal base state */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-delay-5 { transition-delay: 0.5s; }
 
-/* Swipe handle cursor */
-.ba-slider { cursor: ew-resize; }
+/* Gold shimmer button */
+.btn-shimmer {
+  background: linear-gradient(90deg, #C9A24B 0%, #E5C57A 50%, #C9A24B 100%);
+  background-size: 200% 100%;
+  transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+.btn-shimmer:hover {
+  background-position: -100% 0;
+}
+
+/* WhatsApp pulse */
+@keyframes wa-pulse {
+  0%, 100% { box-shadow: 0 12px 40px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.6); }
+  70%       { box-shadow: 0 12px 40px rgba(37,211,102,0.5), 0 0 0 18px rgba(37,211,102,0); }
+}
+.animate-wa-pulse { animation: wa-pulse 2.5s infinite; }
+
+/* Float animation for decorative elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-slow { animation: float 9s ease-in-out infinite; }
+
+/* Gold orb */
+@keyframes orb-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%      { transform: scale(1.15); opacity: 0.9; }
+}
+.animate-orb { animation: orb-pulse 8s ease-in-out infinite; }
+
+/* Scroll indicator */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50%      { transform: translateY(8px); opacity: 0.4; }
+}
+.animate-scroll { animation: scroll-bounce 2s ease-in-out infinite; }
+
+/* Number counter shimmer */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, #C9A24B 25%, #E5C57A 50%, #C9A24B 75%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s infinite;
+}
+
+/* Card border glow on hover */
+.card-gold-hover { transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease; }
+.card-gold-hover:hover {
+  border-color: rgba(201,162,75,0.35) !important;
+  box-shadow: 0 20px 60px -12px rgba(0,0,0,0.5), 0 0 30px rgba(201,162,75,0.08), inset 0 1px 0 rgba(201,162,75,0.1);
+  transform: translateY(-3px);
+}
+
+/* Line draw animation */
+@keyframes line-draw {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+/* Urgency badge pulse */
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,162,75,0.4); }
+  50%      { box-shadow: 0 0 0 8px rgba(201,162,75,0); }
+}
+.animate-badge { animation: badge-pulse 2s ease-in-out infinite; }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #0A0E14; }
-::-webkit-scrollbar-thumb { background: #C9A24B44; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: rgba(201,162,75,0.3); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #C9A24B; }
+
+/* Cursor for slider */
+.ba-slider { cursor: ew-resize; }
+
+/* Selection color */
+::selection { background: rgba(201,162,75,0.25); color: #F4F5F7; }

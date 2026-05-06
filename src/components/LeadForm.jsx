@@ -28,7 +28,13 @@ function openWhatsApp(form) {
     form.area ? `*אזור:* ${form.area}` : '',
   ].filter(Boolean).join('\n')
 
-  window.open(`https://wa.me/972${WA}?text=${encodeURIComponent(msg)}`, '_blank')
+  const a = document.createElement('a')
+  a.href = `https://wa.me/972${WA}?text=${encodeURIComponent(msg)}`
+  a.target = '_blank'
+  a.rel = 'noopener noreferrer'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
 }
 
 async function sendToSheets(form) {
@@ -37,7 +43,6 @@ async function sendToSheets(form) {
     await fetch(SHEET_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name:  form.name,
         phone: form.phone,
@@ -67,8 +72,8 @@ export default function LeadForm() {
     const errs = validate(form)
     if (Object.keys(errs).length) { setErrors(errs); return }
     setErrors({})
-    sendToSheets(form)
     openWhatsApp(form)
+    sendToSheets(form)
     setSubmitted(true)
   }
 

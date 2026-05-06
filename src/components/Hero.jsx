@@ -35,7 +35,9 @@ export default function Hero() {
     return () => clearTimeout(timer)
   }, [])
 
-  const clients = useCounter(98, 2000, countersStarted)
+  const projects = useCounter(120, 2200, countersStarted)
+  const years    = useCounter(12,  1800, countersStarted)
+  const clients  = useCounter(98,  2000, countersStarted)
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-pg-bg">
@@ -113,36 +115,20 @@ export default function Hero() {
             </a>
           </motion.div>
 
-          {/* Trust bar */}
-          <motion.div
-            {...fadeUp(0.54)}
-            className="flex flex-wrap items-center gap-x-6 gap-y-3"
-          >
-            {/* Shield — guarantee */}
-            <div className="flex items-center gap-2">
-              <ShieldIcon />
-              <span className="text-[13px] text-pg-dim font-medium">100% אחריות ואמינות</span>
-            </div>
-
-            {/* Divider */}
-            <span className="hidden sm:block w-px h-4 bg-white/15" />
-
-            {/* Response */}
-            <div className="flex items-center gap-2">
-              <ClockIcon />
-              <span className="text-[13px] text-pg-dim font-medium">מענה תוך 30 דקות</span>
-            </div>
-
-            {/* Divider */}
-            <span className="hidden sm:block w-px h-4 bg-white/15" />
-
-            {/* Rating counter */}
-            <div className="flex items-center gap-2">
-              <StarIcon />
-              <span className="text-[13px] text-pg-dim font-medium">
-                <span className="text-pg-text font-bold">{clients}%</span> ממליצים
-              </span>
-            </div>
+          {/* Stats bar */}
+          <motion.div {...fadeUp(0.54)} className="flex items-stretch gap-0 w-fit border border-white/8 rounded-xl overflow-hidden backdrop-blur-sm bg-pg-bg/30">
+            {[
+              { val: projects, suffix: '+', label: 'פרויקטים' },
+              { val: years,    suffix: '',  label: 'שנות ניסיון' },
+              { val: clients,  suffix: '%', label: 'ממליצים' },
+            ].map((s, i) => (
+              <div key={i} className={`px-8 py-5 text-center ${i < 2 ? 'border-l border-white/8' : ''}`}>
+                <div className="text-[28px] font-black text-pg-text leading-none tracking-tight">
+                  {s.val}<span className="text-pg-gold text-xl">{s.suffix}</span>
+                </div>
+                <div className="text-[11px] text-pg-mute mt-2 tracking-wide">{s.label}</div>
+              </div>
+            ))}
           </motion.div>
         </div>
       </div>

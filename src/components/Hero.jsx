@@ -36,7 +36,7 @@ export default function Hero() {
   }, [])
 
   const guarantee = useCounter(100, 2000, countersStarted)
-  const years     = useCounter(12,  1800, countersStarted)
+  const warranty  = useCounter(12,  1800, countersStarted)
   const clients   = useCounter(98,  2000, countersStarted)
   const response  = useCounter(30,  1600, countersStarted)
 
@@ -117,18 +117,24 @@ export default function Hero() {
           </motion.div>
 
           {/* Stats bar */}
-          <motion.div {...fadeUp(0.54)} className="flex items-stretch gap-0 w-fit border border-white/8 rounded-xl overflow-hidden backdrop-blur-sm bg-pg-bg/30">
+          <motion.div {...fadeUp(0.54)} className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-xl">
             {[
               { val: guarantee, suffix: '%', label: 'אחריות מובטחת' },
-              { val: years,     suffix: '',  label: 'שנות אמינות'   },
-              { val: clients,   suffix: '%', label: 'ממליצים'        },
-              { val: response,  suffix: '′', label: 'מענה מהיר'      },
+              { val: warranty,  suffix: '',  label: 'חודשי אחריות'   },
+              { val: clients,   suffix: '%', label: 'לקוחות ממליצים' },
+              { val: response,  suffix: '′', label: 'מענה מהיר'       },
             ].map((s, i) => (
-              <div key={i} className={`px-6 py-5 text-center ${i < 3 ? 'border-l border-white/8' : ''}`}>
-                <div className="text-[28px] font-black text-pg-text leading-none tracking-tight">
-                  {s.val}<span className="text-pg-gold text-xl">{s.suffix}</span>
+              <div
+                key={i}
+                className="relative flex flex-col items-center justify-center text-center px-4 py-5 rounded-2xl bg-white/[0.06] backdrop-blur-md border border-white/10 hover:border-pg-gold/30 transition-colors duration-300 overflow-hidden group"
+              >
+                {/* Gold top accent line */}
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-l from-transparent via-pg-gold/60 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+
+                <div className="text-[32px] font-black leading-none tracking-tight text-white mb-2">
+                  {s.val}<span className="text-pg-gold">{s.suffix}</span>
                 </div>
-                <div className="text-[11px] text-pg-mute mt-2 tracking-wide">{s.label}</div>
+                <div className="text-[12px] font-semibold text-pg-dim leading-tight">{s.label}</div>
               </div>
             ))}
           </motion.div>

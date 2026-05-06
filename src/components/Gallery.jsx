@@ -38,9 +38,17 @@ function BeforeAfterSlider({ before, after }) {
     setPos(Math.max(2, Math.min(98, ((clientX - rect.left) / rect.width) * 100)))
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowLeft')  setPos((p) => Math.min(98, p + 2))
+    if (e.key === 'ArrowRight') setPos((p) => Math.max(2, p - 2))
+  }
+
   return (
     <div
       ref={ref}
+      role="img"
+      aria-label="השוואת לפני ואחרי — גררו לצפייה"
+      tabIndex={0}
       className="ba-slider relative rounded-xl overflow-hidden border border-white/8 select-none"
       style={{ aspectRatio: '4/3' }}
       onMouseDown={(e) => { setDragging(true); updatePos(e.clientX) }}
@@ -49,6 +57,7 @@ function BeforeAfterSlider({ before, after }) {
       onMouseLeave={() => setDragging(false)}
       onTouchStart={(e) => updatePos(e.touches[0].clientX)}
       onTouchMove={(e) => { e.preventDefault(); updatePos(e.touches[0].clientX) }}
+      onKeyDown={handleKeyDown}
     >
       {/* After (full) */}
       <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${after})` }} />
@@ -124,8 +133,11 @@ export default function Gallery() {
             >
               <img
                 src={p.src}
-                alt={p.t}
+                alt={`פרויקט ${p.tag} — ${p.loc}`}
                 loading="lazy"
+                decoding="async"
+                width="400"
+                height="500"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-pg-bg/90 via-transparent to-transparent" />

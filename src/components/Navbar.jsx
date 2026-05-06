@@ -83,7 +83,7 @@ export default function Navbar() {
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-7">
+          <nav className="hidden md:flex items-center gap-7" aria-label="ניווט ראשי">
             {links.map((l) => (
               <a
                 key={l.href}
@@ -118,7 +118,9 @@ export default function Navbar() {
           <button
             onClick={() => setMenuOpen((v) => !v)}
             className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 rounded-xl hover:bg-white/5 transition"
-            aria-label="תפריט"
+            aria-label={menuOpen ? 'סגור תפריט' : 'פתח תפריט'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
             <motion.span
               animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 7 : 0 }}
@@ -139,11 +141,14 @@ export default function Navbar() {
         <AnimatePresence>
           {menuOpen && (
             <motion.div
+              id="mobile-menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="md:hidden overflow-hidden bg-pg-bg/98 backdrop-blur-xl border-t border-white/6"
+              role="navigation"
+              aria-label="תפריט ניווט נייד"
             >
               <div className="px-5 pb-6 pt-3 flex flex-col gap-1">
                 {links.map((l, i) => (

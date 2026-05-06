@@ -4,6 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 const PHONE = '053-523-0998'
 const WA    = '0535230998'
 
+// הדביקו כאן את כתובת ה-Web App של Google Apps Script לאחר ההגדרה
+const SHEET_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'
+
 const types = ['מחסן', 'משרד', 'קליניקה', 'בנייה קלה', 'שיפוץ', 'אחר']
 const areas = ['מרכז', 'שפלה', 'דרום']
 
@@ -13,6 +16,37 @@ function validate(form) {
   if (!form.phone.trim()) errors.phone = 'שדה חובה'
   else if (!/^0[0-9\-]{8,10}$/.test(form.phone.replace(/\s/g, ''))) errors.phone = 'מספר לא תקין'
   return errors
+}
+
+function openWhatsApp(form) {
+  const msg = [
+    '👋 פנייה חדשה מהאתר — פז גבהים',
+    '',
+    `*שם:* ${form.name}`,
+    `*טלפון:* ${form.phone}`,
+    form.type ? `*סוג פרויקט:* ${form.type}` : '',
+    form.area ? `*אזור:* ${form.area}` : '',
+  ].filter(Boolean).join('\n')
+
+  window.open(`https://wa.me/972${WA}?text=${encodeURIComponent(msg)}`, '_blank')
+}
+
+async function sendToSheets(form) {
+  if (SHEET_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') return
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:  form.name,
+        phone: form.phone,
+        type:  form.type  || '—',
+        area:  form.area  || '—',
+        date:  new Date().toLocaleString('he-IL'),
+      }),
+    })
+  } catch (_) {}
 }
 
 export default function LeadForm() {
@@ -33,6 +67,8 @@ export default function LeadForm() {
     const errs = validate(form)
     if (Object.keys(errs).length) { setErrors(errs); return }
     setErrors({})
+    sendToSheets(form)
+    openWhatsApp(form)
     setSubmitted(true)
   }
 

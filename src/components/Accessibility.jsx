@@ -149,34 +149,35 @@ export default function Accessibility() {
   return (
     <>
       {/* ── Floating toggle button ── */}
-      <div className="fixed bottom-24 left-6 z-[60]" aria-label="כפתור נגישות">
-        <button
-          ref={btnRef}
-          onClick={() => setOpen(v => !v)}
-          aria-expanded={open}
-          aria-controls="a11y-menu"
-          aria-label="פתח תפריט נגישות"
-          className="relative w-13 h-13 rounded-full flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-white/15 transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:outline-2 focus-visible:outline-[#C9A24B] focus-visible:outline-offset-3"
-          style={{ width: 52, height: 52, background: 'linear-gradient(135deg, #1C2130 0%, #0A0E14 100%)' }}
-        >
-          {/* Gold ring */}
+      <motion.button
+        ref={btnRef}
+        onClick={() => setOpen(v => !v)}
+        aria-expanded={open}
+        aria-controls="a11y-menu"
+        aria-label="פתח תפריט נגישות"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 1.8 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        className="fixed bottom-24 left-6 z-[60] w-14 h-14 rounded-full flex items-center justify-center focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+        style={{
+          background: 'linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)',
+          boxShadow: '0 8px 32px rgba(21,101,192,0.6), 0 0 0 0 rgba(21,101,192,0.4)',
+          animation: 'a11y-pulse 2.8s infinite',
+        }}
+      >
+        <WheelchairIcon />
+        {activeCount > 0 && (
           <span
-            className="absolute inset-0 rounded-full pointer-events-none"
-            style={{ boxShadow: '0 0 0 1.5px rgba(201,162,75,0.45)' }}
-            aria-hidden="true"
-          />
-          <A11yIcon />
-          {activeCount > 0 && (
-            <span
-              className="absolute -top-1 -right-1 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center text-[#0A0E14]"
-              style={{ background: '#C9A24B' }}
-              aria-label={`${activeCount} התאמות פעילות`}
-            >
-              {activeCount}
-            </span>
-          )}
-        </button>
-      </div>
+            className="absolute -top-1 -right-1 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center text-white"
+            style={{ background: '#C9A24B' }}
+            aria-label={`${activeCount} התאמות פעילות`}
+          >
+            {activeCount}
+          </span>
+        )}
+      </motion.button>
 
       {/* ── Dropdown menu ── */}
       <AnimatePresence>
@@ -194,7 +195,7 @@ export default function Accessibility() {
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="fixed z-[59] shadow-[0_24px_64px_rgba(0,0,0,0.7)] border border-white/10 rounded-2xl overflow-hidden"
             style={{
-              bottom: 88,
+              bottom: 168,
               left: 16,
               width: 240,
               background: 'linear-gradient(160deg, #161C26 0%, #0F1420 100%)',
@@ -352,11 +353,31 @@ export default function Accessibility() {
 }
 
 /* ── Icons ── */
-function A11yIcon() {
+function WheelchairIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="4" r="1.5" fill="#C9A24B" />
-      <path d="M12 7v4m0 0l-3 5m3-5l3 5M9 11H6m3 0h6m0 0h3" stroke="#C9A24B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+    <svg width="28" height="28" viewBox="0 0 100 100" fill="white" aria-hidden="true">
+      {/* Head */}
+      <circle cx="52" cy="14" r="10" />
+      {/* Body leaning forward */}
+      <path d="M52 26 C52 26 38 36 35 52 L55 52 L68 70 L78 64 L63 44 L63 30 Z" />
+      {/* Arm extended with laptop */}
+      <path d="M63 30 L82 26 L84 34 L66 38 Z" />
+      {/* Laptop screen */}
+      <rect x="82" y="18" width="14" height="10" rx="2" />
+      <line x1="82" y1="28" x2="96" y2="28" stroke="white" strokeWidth="2"/>
+      {/* Seat */}
+      <path d="M35 52 L35 58 L60 58 L60 52 Z" />
+      {/* Small front wheel */}
+      <circle cx="30" cy="72" r="8" fill="none" stroke="white" strokeWidth="5" />
+      {/* Large rear wheel */}
+      <circle cx="68" cy="82" r="16" fill="none" stroke="white" strokeWidth="6" />
+      {/* Wheel spokes */}
+      <line x1="68" y1="66" x2="68" y2="98" stroke="white" strokeWidth="2.5"/>
+      <line x1="52" y1="82" x2="84" y2="82" stroke="white" strokeWidth="2.5"/>
+      <line x1="57" y1="71" x2="79" y2="93" stroke="white" strokeWidth="2.5"/>
+      <line x1="79" y1="71" x2="57" y2="93" stroke="white" strokeWidth="2.5"/>
+      {/* Foot rest */}
+      <path d="M35 58 L25 68 L32 68" strokeWidth="4" stroke="white" fill="none" strokeLinecap="round"/>
     </svg>
   )
 }

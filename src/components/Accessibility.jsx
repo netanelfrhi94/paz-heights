@@ -164,7 +164,7 @@ export default function Accessibility() {
               bottom: 160,
               left: 16,
               width: 300,
-              maxHeight: 'calc(100vh - 176px)',
+              maxHeight: 'min(460px, calc(100dvh - 220px))',
               borderRadius: 20,
               overflow: 'hidden',
               background: '#ffffff',

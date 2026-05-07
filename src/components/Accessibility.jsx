@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 const STORAGE_KEY = 'pg-a11y-prefs'
 const PHONE = '053-523-0998'
-const EMAIL = 'accessibility@pazgavohim.co.il'
+const EMAIL = 'paz.gvahim@gmail.com'
 const STATEMENT_DATE = '01/05/2025'
 
 /* ─── All 12 grid options ─── */

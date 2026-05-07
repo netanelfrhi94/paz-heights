@@ -8,7 +8,8 @@ import Process      from './components/Process'
 import FAQ          from './components/FAQ'
 import LeadForm     from './components/LeadForm'
 import Footer       from './components/Footer'
-import FloatingWA   from './components/FloatingWA'
+import FloatingWA     from './components/FloatingWA'
+import Accessibility  from './components/Accessibility'
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
       </main>
       <Footer />
       <FloatingWA />
+      <Accessibility />
     </>
   )
 }

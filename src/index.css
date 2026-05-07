@@ -153,6 +153,85 @@
   }
 }
 
+/* ════════════════════════════════════════════════
+   ACCESSIBILITY CLASSES
+   Applied to <body> only when user selects option.
+   No effect unless class is present.
+   ════════════════════════════════════════════════ */
+
+/* Large text */
+body.a11y-large-text { font-size: 120%; }
+body.a11y-large-text p,
+body.a11y-large-text span,
+body.a11y-large-text li,
+body.a11y-large-text button,
+body.a11y-large-text a { font-size: 1.1em; }
+
+/* Small text */
+body.a11y-small-text { font-size: 87%; }
+body.a11y-small-text p,
+body.a11y-small-text span,
+body.a11y-small-text li,
+body.a11y-small-text button,
+body.a11y-small-text a { font-size: 0.93em; }
+
+/* High contrast */
+body.a11y-high-contrast { background: #000 !important; color: #fff !important; }
+body.a11y-high-contrast * { color: #fff !important; border-color: #fff !important; }
+body.a11y-high-contrast img { filter: contrast(1.2); }
+body.a11y-high-contrast a { color: #ffdd00 !important; text-decoration: underline !important; }
+body.a11y-high-contrast button,
+body.a11y-high-contrast [class*="bg-pg"] { background: #111 !important; }
+
+/* Light contrast */
+body.a11y-light-contrast { background: #fff !important; color: #000 !important; }
+body.a11y-light-contrast * { color: #000 !important; }
+body.a11y-light-contrast [class*="bg-pg"],
+body.a11y-light-contrast section,
+body.a11y-light-contrast nav,
+body.a11y-light-contrast footer { background: #f5f5f5 !important; }
+body.a11y-light-contrast a { color: #1a5fb4 !important; text-decoration: underline !important; }
+body.a11y-light-contrast button { background: #e0e0e0 !important; border-color: #999 !important; }
+
+/* Grayscale */
+body.a11y-grayscale { filter: grayscale(100%); }
+
+/* Highlight links */
+body.a11y-highlight-links a {
+  outline: 2px solid #C9A24B !important;
+  outline-offset: 2px !important;
+  border-radius: 3px !important;
+  background: rgba(201, 162, 75, 0.12) !important;
+  padding: 1px 3px !important;
+}
+
+/* Stop animations */
+body.a11y-stop-animations *,
+body.a11y-stop-animations *::before,
+body.a11y-stop-animations *::after {
+  animation: none !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Readable font */
+body.a11y-readable-font,
+body.a11y-readable-font * {
+  font-family: Arial, Helvetica, sans-serif !important;
+  letter-spacing: 0.04em !important;
+  word-spacing: 0.1em !important;
+}
+
+/* Increased line height */
+body.a11y-line-height p,
+body.a11y-line-height li,
+body.a11y-line-height span,
+body.a11y-line-height div { line-height: 2.2 !important; }
+
+/* ════════════════════════════════════════════════ */
+
 /* Architectural divider */
 .arch-divider { width: 48px; height: 1px; background: #C9A24B; display: inline-block; margin-bottom: 24px; }
 /* Section number */

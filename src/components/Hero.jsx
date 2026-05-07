@@ -70,9 +70,9 @@ export default function Hero() {
 
           {/* H1 */}
           <motion.h1 {...fadeUp(0.2)} className="text-display text-pg-text mb-7">
-            בונים ללא פשרות.<br />
-            <span className="text-pg-gold">מוסרים ביום</span><br />
-            שהובטח.
+            פז גבהים — פתרונות בנייה<br />
+            מתקדמים בהתאמה אישית.<br />
+            <span className="text-pg-gold">בונים אמון. בונים איכות.</span>
           </motion.h1>
 
           {/* Sub */}

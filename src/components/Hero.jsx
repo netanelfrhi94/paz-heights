@@ -61,19 +61,34 @@ export default function Hero() {
         <div className="max-w-2xl">
 
           {/* Eyebrow */}
-          <motion.div {...fadeUp(0.1)} className="flex items-center gap-3 mb-8">
+          <motion.div {...fadeUp(0.1)} className="flex items-center gap-3 mb-6">
             <span className="block w-10 h-px bg-pg-gold flex-shrink-0" />
             <span className="text-[11px] font-semibold text-pg-gold/70 tracking-[0.28em] uppercase">
               בנייה קלה · שיפוצים · מחסנים
             </span>
           </motion.div>
 
+          {/* Brand name */}
+          <motion.div {...fadeUp(0.15)} className="text-[15px] font-bold text-pg-mute tracking-[0.18em] uppercase mb-4">
+            פז גבהים
+          </motion.div>
+
           {/* H1 */}
-          <motion.h1 {...fadeUp(0.2)} className="text-display text-pg-text mb-7">
-            פז גבהים — פתרונות בנייה<br />
-            מתקדמים בהתאמה אישית.<br />
-            <span className="text-pg-gold">בונים אמון. בונים איכות.</span>
+          <motion.h1 {...fadeUp(0.22)}
+            className="text-pg-text mb-5 leading-[1.08]"
+            style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)', fontWeight: 800, letterSpacing: '-0.02em' }}
+          >
+            פתרונות בנייה מתקדמים<br />
+            בהתאמה אישית.
           </motion.h1>
+
+          {/* Gold tagline */}
+          <motion.p {...fadeUp(0.3)}
+            className="text-pg-gold font-bold mb-8"
+            style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', letterSpacing: '-0.01em' }}
+          >
+            בונים אמון. בונים איכות.
+          </motion.p>
 
           {/* Sub */}
           <motion.p {...fadeUp(0.32)} className="text-[17px] text-pg-dim leading-[1.85] max-w-xl mb-10">

@@ -324,15 +324,19 @@ export default function Accessibility() {
 /* ─── Floating button icon ─── */
 function WheelchairIcon() {
   return (
-    <svg width="30" height="30" viewBox="0 0 64 64" fill="white" aria-hidden="true">
-      <circle cx="36" cy="7" r="5.5" />
-      <path d="M36 13 L36 30 L24 30 L24 36 L40 36 L40 13 Z" />
-      <path d="M36 18 L46 18 L46 22 L38 22" />
-      <rect x="22" y="28" width="4" height="18" rx="1.5" />
-      <rect x="22" y="34" width="18" height="4" rx="1.5" />
-      <path d="M22 46 L14 46 L14 50 L22 50" strokeWidth="3.5" stroke="white" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <circle cx="38" cy="50" r="12" fill="none" stroke="white" strokeWidth="4" />
-      <circle cx="18" cy="52" r="5" fill="none" stroke="white" strokeWidth="3.5" />
+    <svg width="32" height="32" viewBox="0 0 100 100" fill="white" aria-hidden="true">
+      {/* Outer circle */}
+      <circle cx="50" cy="50" r="48" fill="none" stroke="white" strokeWidth="4" />
+      {/* Head */}
+      <circle cx="50" cy="22" r="8" />
+      {/* Body */}
+      <rect x="46" y="32" width="8" height="22" rx="4" />
+      {/* Arms */}
+      <rect x="18" y="38" width="64" height="7" rx="3.5" />
+      {/* Left leg */}
+      <rect x="38" y="52" width="7" height="26" rx="3.5" transform="rotate(12 41 52)" />
+      {/* Right leg */}
+      <rect x="55" y="52" width="7" height="26" rx="3.5" transform="rotate(-12 59 52)" />
     </svg>
   )
 }

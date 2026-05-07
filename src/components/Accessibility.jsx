@@ -203,6 +203,7 @@ export default function Accessibility() {
               background: '#ffffff',
               boxShadow: '0 20px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.15)',
               border: '1px solid #e0e0e0',
+              fontFamily: "'Assistant', sans-serif",
             }}
           >
             {/* Header */}

@@ -68,26 +68,22 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          {/* Brand name */}
-          <motion.div {...fadeUp(0.15)} className="text-[15px] font-bold text-pg-mute tracking-[0.18em] uppercase mb-4">
-            פז גבהים
-          </motion.div>
-
-          {/* H1 */}
-          <motion.h1 {...fadeUp(0.22)}
-            className="text-pg-text mb-5 leading-[1.08]"
-            style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)', fontWeight: 800, letterSpacing: '-0.02em' }}
-          >
-            פתרונות בנייה מתקדמים<br />
-            בהתאמה אישית.
+          {/* H1 — brand + tagline */}
+          <motion.h1 {...fadeUp(0.15)} className="text-pg-text mb-5 leading-[1.1]">
+            <span className="block" style={{ fontSize: 'clamp(2.6rem, 6vw, 4.6rem)', fontWeight: 800, letterSpacing: '-0.02em' }}>
+              פז גבהים
+            </span>
+            <span className="block text-pg-gold" style={{ fontSize: 'clamp(1.5rem, 3.2vw, 2.6rem)', fontWeight: 800, letterSpacing: '-0.01em' }}>
+              בונים אמון. בונים איכות.
+            </span>
           </motion.h1>
 
-          {/* Gold tagline */}
-          <motion.p {...fadeUp(0.3)}
-            className="text-pg-gold font-bold mb-8"
-            style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', letterSpacing: '-0.01em' }}
+          {/* Sub-headline */}
+          <motion.p {...fadeUp(0.28)}
+            className="text-pg-dim mb-8 leading-relaxed"
+            style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', fontWeight: 500 }}
           >
-            בונים אמון. בונים איכות.
+            פתרונות בנייה מתקדמים בהתאמה אישית.
           </motion.p>
 
           {/* Sub */}

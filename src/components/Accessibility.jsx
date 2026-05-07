@@ -6,17 +6,20 @@ const PHONE = '053-523-0998'
 const EMAIL = 'accessibility@pazgavohim.co.il'
 const STATEMENT_DATE = '01/05/2025'
 
+/* ─── All 12 grid options ─── */
 const GRID_OPTIONS = [
-  { id: 'large-text',      label: 'הגדלת טקסט',       cls: 'a11y-large-text',      group: 'textSize', icon: <BigTextIcon /> },
-  { id: 'small-text',      label: 'הקטנת טקסט',       cls: 'a11y-small-text',      group: 'textSize', icon: <SmallTextIcon /> },
-  { id: 'high-contrast',   label: 'ניגודיות גבוהה',   cls: 'a11y-high-contrast',   group: 'contrast', icon: <ContrastDarkIcon /> },
-  { id: 'light-contrast',  label: 'ניגודיות בהירה',   cls: 'a11y-light-contrast',  group: 'contrast', icon: <ContrastLightIcon /> },
-  { id: 'grayscale',       label: 'גווני אפור',        cls: 'a11y-grayscale',                          icon: <GrayIcon /> },
-  { id: 'highlight-links', label: 'הדגשת קישורים',    cls: 'a11y-highlight-links',                    icon: <LinksIcon /> },
-  { id: 'stop-animations', label: 'עצירת אנימציות',   cls: 'a11y-stop-animations',                    icon: <StopAnimIcon /> },
-  { id: 'readable-font',   label: 'פונט קריא',         cls: 'a11y-readable-font',                      icon: <FontReadIcon /> },
-  { id: 'line-height',     label: 'רווח בין שורות',   cls: 'a11y-line-height',                        icon: <LineHIcon /> },
-  { id: 'reset-text',      label: 'איפוס גודל',        cls: null, resetGroup: 'textSize',               icon: <ResetSizeIcon /> },
+  { id: 'large-text',       label: 'הגדלת טקסט',        cls: 'a11y-large-text',       group: 'textSize', icon: <BigTextIcon /> },
+  { id: 'small-text',       label: 'הקטנת טקסט',        cls: 'a11y-small-text',       group: 'textSize', icon: <SmallTextIcon /> },
+  { id: 'high-contrast',    label: 'ניגודיות גבוהה',    cls: 'a11y-high-contrast',    group: 'contrast', icon: <ContrastDarkIcon /> },
+  { id: 'light-contrast',   label: 'ניגודיות בהירה',    cls: 'a11y-light-contrast',   group: 'contrast', icon: <ContrastLightIcon /> },
+  { id: 'grayscale',        label: 'גווני אפור',         cls: 'a11y-grayscale',                           icon: <GrayIcon /> },
+  { id: 'highlight-links',  label: 'הדגשת קישורים',     cls: 'a11y-highlight-links',                     icon: <LinksIcon /> },
+  { id: 'stop-animations',  label: 'עצירת אנימציות',    cls: 'a11y-stop-animations',                     icon: <StopAnimIcon /> },
+  { id: 'readable-font',    label: 'פונט קריא',          cls: 'a11y-readable-font',                       icon: <FontReadIcon /> },
+  { id: 'line-height',      label: 'רווח בין שורות',    cls: 'a11y-line-height',                         icon: <LineHIcon /> },
+  { id: 'letter-spacing',   label: 'רווח בין אותיות',   cls: 'a11y-letter-spacing',                      icon: <LetterSpacingIcon /> },
+  { id: 'dyslexia-font',    label: 'פונט דיסלקציה',     cls: 'a11y-dyslexia-font',    group: 'font',     icon: <DyslexiaIcon /> },
+  { id: 'reading-guide',    label: 'מדריך קריאה',        cls: null,                                       icon: <ReadingGuideIcon /> },
 ]
 
 function loadPrefs() {
@@ -39,33 +42,47 @@ export default function Accessibility() {
   const [open, setOpen]             = useState(false)
   const [prefs, setPrefs]           = useState(loadPrefs)
   const [showStatement, setShowStatement] = useState(false)
+  const [mouseY, setMouseY]         = useState(-999)
   const btnRef   = useRef(null)
   const menuRef  = useRef(null)
   const modalRef = useRef(null)
 
+  /* Apply on mount */
   useEffect(() => { applyPrefs(prefs) }, [])
+  /* Persist + apply on change */
   useEffect(() => { savePrefs(prefs); applyPrefs(prefs) }, [prefs])
 
-  /* Close on Escape / outside click */
+  /* Reading guide — track mouse Y */
+  useEffect(() => {
+    if (!prefs['reading-guide']) return
+    const onMove = (e) => setMouseY(e.clientY)
+    window.addEventListener('mousemove', onMove)
+    return () => { window.removeEventListener('mousemove', onMove); setMouseY(-999) }
+  }, [prefs['reading-guide']])
+
+  /* Close menu on Escape / outside click */
   useEffect(() => {
     if (!open) return
     const onKey = (e) => { if (e.key === 'Escape') { setOpen(false); btnRef.current?.focus() } }
-    const onOut  = (e) => { if (menuRef.current && !menuRef.current.contains(e.target) && !btnRef.current?.contains(e.target)) setOpen(false) }
+    const onOut = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target) && !btnRef.current?.contains(e.target)) setOpen(false)
+    }
     document.addEventListener('keydown', onKey)
     document.addEventListener('mousedown', onOut)
     return () => { document.removeEventListener('keydown', onKey); document.removeEventListener('mousedown', onOut) }
   }, [open])
 
+  /* Close statement on Escape / outside click */
   useEffect(() => {
     if (!showStatement) return
     const onKey = (e) => { if (e.key === 'Escape') { setShowStatement(false); setOpen(true) } }
-    const onOut  = (e) => { if (modalRef.current && !modalRef.current.contains(e.target)) setShowStatement(false) }
+    const onOut = (e) => { if (modalRef.current && !modalRef.current.contains(e.target)) setShowStatement(false) }
     document.addEventListener('keydown', onKey)
     document.addEventListener('mousedown', onOut)
     return () => { document.removeEventListener('keydown', onKey); document.removeEventListener('mousedown', onOut) }
   }, [showStatement])
 
-  /* Focus trap */
+  /* Focus trap — menu */
   const trapMenu = useCallback((e) => {
     if (!menuRef.current || e.key !== 'Tab') return
     const els = [...menuRef.current.querySelectorAll('button, a')]
@@ -80,6 +97,7 @@ export default function Accessibility() {
     return () => document.removeEventListener('keydown', trapMenu)
   }, [open, trapMenu])
 
+  /* Focus trap — modal */
   const trapModal = useCallback((e) => {
     if (!modalRef.current || e.key !== 'Tab') return
     const els = [...modalRef.current.querySelectorAll('button, a')]
@@ -117,6 +135,21 @@ export default function Accessibility() {
 
   return (
     <>
+      {/* ─── Reading guide overlay ─── */}
+      {prefs['reading-guide'] && mouseY > 0 && (
+        <div
+          aria-hidden="true"
+          className="fixed inset-x-0 pointer-events-none z-[55]"
+          style={{
+            top: mouseY - 14,
+            height: 32,
+            background: 'rgba(255, 230, 0, 0.18)',
+            borderTop: '1px solid rgba(200, 170, 0, 0.4)',
+            borderBottom: '1px solid rgba(200, 170, 0, 0.4)',
+          }}
+        />
+      )}
+
       {/* ─── Floating button ─── */}
       <motion.button
         ref={btnRef}
@@ -140,7 +173,7 @@ export default function Accessibility() {
           <span
             className="absolute -top-1 -right-1 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center text-white"
             style={{ background: '#C9A24B' }}
-            aria-label={`${activeCount} התאמות פעילות`}
+            aria-label={`${activeCount} התאמות נגישות פעילות`}
           >{activeCount}</span>
         )}
       </motion.button>
@@ -174,7 +207,7 @@ export default function Accessibility() {
           >
             {/* Header */}
             <div
-              className="flex items-center justify-between px-5 py-3.5"
+              className="flex items-center justify-between px-5 py-3.5 shrink-0"
               style={{ background: 'linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)' }}
             >
               <h2 id="a11y-title" className="text-white font-bold text-[17px] tracking-wide">נגישות</h2>
@@ -187,7 +220,7 @@ export default function Accessibility() {
               </button>
             </div>
 
-            {/* Grid of options */}
+            {/* Grid */}
             <div className="p-3 overflow-y-auto flex-1" style={{ background: '#f8f9fa' }}>
               <div className="grid grid-cols-2 gap-2">
                 {GRID_OPTIONS.map((opt) => {
@@ -196,16 +229,15 @@ export default function Accessibility() {
                     <button
                       key={opt.id}
                       onClick={() => handleOption(opt)}
-                      aria-pressed={opt.cls ? active : undefined}
+                      aria-pressed={active}
                       className="relative flex flex-col items-center justify-center gap-2 rounded-xl py-4 px-2 text-center transition-all duration-150 focus-visible:outline-2 focus-visible:outline-offset-2"
                       style={{
                         background: active ? '#E3F0FF' : '#ffffff',
-                        border: active ? '2px solid #1565C0' : '2px solid #e8e8e8',
+                        border: `2px solid ${active ? '#1565C0' : '#e8e8e8'}`,
                         color: active ? '#1565C0' : '#333',
-                        focusVisibleOutlineColor: '#1565C0',
+                        outlineColor: '#1565C0',
                       }}
                     >
-                      {/* Checkmark badge */}
                       {active && (
                         <span
                           className="absolute top-1.5 left-1.5 w-5 h-5 rounded-full flex items-center justify-center"
@@ -231,18 +263,20 @@ export default function Accessibility() {
 
             {/* Footer */}
             <div
-              className="flex items-center justify-between px-4 py-3 border-t"
-              style={{ background: '#1565C0', borderColor: '#1255A8' }}
+              className="flex items-center justify-between px-4 py-3 shrink-0"
+              style={{ background: '#1565C0' }}
             >
               <button
                 onClick={() => setPrefs({})}
                 className="text-white/80 hover:text-white text-[13px] font-medium transition-colors focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-1 rounded"
+                aria-label="בטל את כל התאמות הנגישות"
               >
                 בטל נגישות
               </button>
               <button
                 onClick={() => { setOpen(false); setShowStatement(true) }}
                 className="text-white/80 hover:text-white text-[13px] font-medium transition-colors focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-1 rounded"
+                aria-label="פתח הצהרת נגישות"
               >
                 הצהרת נגישות
               </button>
@@ -257,7 +291,7 @@ export default function Accessibility() {
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="הצהרת נגישות"
+            aria-labelledby="statement-title"
             dir="rtl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -275,11 +309,12 @@ export default function Accessibility() {
               className="relative w-full max-w-lg overflow-hidden"
               style={{ background: '#fff', borderRadius: 16, boxShadow: '0 24px 80px rgba(0,0,0,0.35)' }}
             >
+              {/* Modal header */}
               <div
                 className="flex items-center justify-between px-6 py-4"
                 style={{ background: 'linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)' }}
               >
-                <h2 className="text-white font-bold text-lg">הצהרת נגישות</h2>
+                <h2 id="statement-title" className="text-white font-bold text-lg">הצהרת נגישות</h2>
                 <button
                   onClick={() => { setShowStatement(false); setOpen(true) }}
                   aria-label="סגור הצהרת נגישות"
@@ -289,28 +324,63 @@ export default function Accessibility() {
                 </button>
               </div>
 
-              <div className="px-6 py-5 text-[14px] leading-relaxed text-gray-600 space-y-4 max-h-[60vh] overflow-y-auto">
-                <p><strong className="text-gray-900">פז גבהים</strong> פועלת לאפשר לכל אדם, לרבות אנשים עם מוגבלויות, לגלוש באתר באופן שוויוני ונוח.</p>
-                <p>האתר מיושם בהתאם להנחיות WCAG 2.1 ברמה AA ועומד בתקנות שוויון זכויות לאנשים עם מוגבלות, התשע"ג–2013.</p>
-                <div className="rounded-xl p-4 space-y-2" style={{ background: '#f0f5ff', border: '1px solid #c7d9f8' }}>
-                  <h3 className="font-bold text-[13px] text-blue-800 mb-2">פרטי אחראי נגישות</h3>
+              {/* Modal body */}
+              <div className="px-6 py-5 text-[14px] leading-[1.8] text-gray-600 space-y-4 max-h-[60vh] overflow-y-auto">
+                <p>
+                  <strong className="text-gray-900">פז גבהים</strong> מחויבת להנגשת האתר לאנשים עם מוגבלויות,
+                  בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות, התשנ"ח–1998, ותקנות שוויון זכויות לאנשים עם מוגבלות
+                  (התאמות נגישות לשירות), התשע"ג–2013.
+                </p>
+
+                <p>
+                  האתר מיושם בהתאם לתקן ישראלי <strong className="text-gray-900">SI 5568</strong> ולהנחיות
+                  הבינלאומיות <strong className="text-gray-900">WCAG 2.1 ברמה AA</strong>.
+                </p>
+
+                <div className="rounded-xl p-4 space-y-2.5 text-[13px]" style={{ background: '#f0f5ff', border: '1px solid #c7d9f8' }}>
+                  <h3 className="font-bold text-blue-800 mb-3 text-[13px] uppercase tracking-wide">פרטי רכז הנגישות</h3>
                   <p><strong className="text-gray-800">שם:</strong> פז גבהים</p>
-                  <p><strong className="text-gray-800">טלפון:</strong>{' '}
-                    <a href={`tel:${PHONE}`} className="text-blue-700 hover:underline" dir="ltr">{PHONE}</a>
+                  <p>
+                    <strong className="text-gray-800">טלפון:</strong>{' '}
+                    <a href={`tel:${PHONE}`} className="text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-blue-600 rounded" dir="ltr">{PHONE}</a>
                   </p>
-                  <p><strong className="text-gray-800">אימייל:</strong>{' '}
-                    <a href={`mailto:${EMAIL}`} className="text-blue-700 hover:underline">{EMAIL}</a>
+                  <p>
+                    <strong className="text-gray-800">אימייל:</strong>{' '}
+                    <a href={`mailto:${EMAIL}`} className="text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-blue-600 rounded">{EMAIL}</a>
                   </p>
-                  <p><strong className="text-gray-800">תאריך עדכון:</strong> {STATEMENT_DATE}</p>
+                  <p><strong className="text-gray-800">תאריך עדכון ההצהרה:</strong> {STATEMENT_DATE}</p>
                 </div>
-                <p>נתקלתם בבעיית נגישות? צרו איתנו קשר ונטפל בפנייה בהקדם.</p>
+
+                <div className="rounded-xl p-4 text-[13px]" style={{ background: '#f9f9f9', border: '1px solid #e8e8e8' }}>
+                  <h3 className="font-bold text-gray-800 mb-2">התאמות הנגישות הקיימות באתר</h3>
+                  <ul className="space-y-1 text-gray-600 list-disc list-inside">
+                    <li>שינוי גודל טקסט</li>
+                    <li>ניגודיות גבוהה ובהירה</li>
+                    <li>גווני אפור</li>
+                    <li>הדגשת קישורים</li>
+                    <li>עצירת אנימציות</li>
+                    <li>פונט קריא ופונט לדיסלקציה</li>
+                    <li>הגדלת רווח בין שורות ובין אותיות (WCAG 1.4.12)</li>
+                    <li>מדריך קריאה (Reading Guide)</li>
+                    <li>קישור "דלג לתוכן" בראש הדף</li>
+                    <li>ניווט מלא במקלדת</li>
+                    <li>תמיכה בקוראי מסך (ARIA labels)</li>
+                  </ul>
+                </div>
+
+                <p className="text-[13px]">
+                  <strong className="text-gray-800">פניות בנושא נגישות:</strong>{' '}
+                  נתקלתם בבעיית נגישות? פנו אלינו ונטפל בהקדם.
+                  ניתן לפנות בטלפון או באימייל המצוינים לעיל.
+                </p>
               </div>
 
+              {/* Modal footer */}
               <div className="px-6 py-4 flex justify-end" style={{ borderTop: '1px solid #e8e8e8' }}>
                 <button
                   onClick={() => { setShowStatement(false); setOpen(true) }}
-                  className="px-6 py-2.5 rounded-xl text-white font-bold text-[14px] focus-visible:outline-2 focus-visible:outline-offset-2"
-                  style={{ background: 'linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)', focusVisibleOutlineColor: '#1565C0' }}
+                  className="px-6 py-2.5 rounded-xl text-white font-bold text-[14px] focus-visible:outline-2 focus-visible:outline-blue-600 focus-visible:outline-offset-2"
+                  style={{ background: 'linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)' }}
                 >
                   סגור
                 </button>
@@ -327,26 +397,16 @@ export default function Accessibility() {
 function WheelchairIcon() {
   return (
     <svg width="32" height="32" viewBox="0 0 100 120" fill="white" aria-hidden="true">
-      {/* Head */}
       <circle cx="65" cy="10" r="10" />
-      {/* Torso leaning forward */}
       <path d="M65 22 C65 22 55 30 50 48 L72 48 L72 22 Z" />
-      {/* Arm extended forward */}
       <path d="M68 30 L82 30 L82 38 L68 38 Z" rx="3" />
-      {/* Wheelchair back */}
       <rect x="30" y="35" width="7" height="32" rx="3" />
-      {/* Seat */}
       <rect x="30" y="46" width="28" height="7" rx="3" />
-      {/* Footrest */}
       <path d="M30 67 L18 67 L18 74" stroke="white" strokeWidth="6" strokeLinecap="round" fill="none" />
-      {/* Large rear wheel */}
       <circle cx="60" cy="84" r="24" fill="none" stroke="white" strokeWidth="7" />
-      {/* Wheel hub */}
       <circle cx="60" cy="84" r="4" />
-      {/* Wheel spokes */}
       <line x1="60" y1="60" x2="60" y2="108" stroke="white" strokeWidth="3" />
       <line x1="36" y1="84" x2="84" y2="84" stroke="white" strokeWidth="3" />
-      {/* Small front wheel */}
       <circle cx="22" cy="86" r="9" fill="none" stroke="white" strokeWidth="6" />
     </svg>
   )
@@ -355,34 +415,40 @@ function CloseSvg() {
   return <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
 }
 
-/* ─── Grid icons (blue, ~28px) ─── */
+/* ─── Grid icons ─── */
 function BigTextIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="1" y="19" fontSize="20" fontWeight="900" fontFamily="Arial">A</text><text x="14" y="14" fontSize="11" fontWeight="700" fontFamily="Arial">+</text></svg>
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="0" y="18" fontSize="18" fontWeight="900" fontFamily="Arial">A</text><text x="15" y="12" fontSize="10" fontWeight="700" fontFamily="Arial">+</text></svg>
 }
 function SmallTextIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="1" y="19" fontSize="20" fontWeight="900" fontFamily="Arial">A</text><text x="14" y="14" fontSize="11" fontWeight="700" fontFamily="Arial">-</text></svg>
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="0" y="18" fontSize="18" fontWeight="900" fontFamily="Arial">A</text><text x="15" y="12" fontSize="10" fontWeight="700" fontFamily="Arial">−</text></svg>
 }
 function ContrastDarkIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15"/><path d="M12 2a10 10 0 0 1 0 20V2z" fill="currentColor"/><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+  return <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 1 0 20V2z" fill="currentColor"/><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.8"/></svg>
 }
 function ContrastLightIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 2a10 10 0 0 1 0 20V2z" fill="white"/><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+  return <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 2a10 10 0 0 1 0 20V2z" fill="white"/><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.8"/></svg>
 }
 function GrayIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M7.8 5.4C9 7 9.5 9.4 9.5 12s-.5 5-1.7 6.6M16.2 5.4C15 7 14.5 9.4 14.5 12s.5 5 1.7 6.6M3 12h18"/></svg>
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M7.5 5.5C8.8 7.2 9.5 9.5 9.5 12s-.7 4.8-2 6.5M16.5 5.5C15.2 7.2 14.5 9.5 14.5 12s.7 4.8 2 6.5"/></svg>
 }
 function LinksIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/><line x1="5" y1="20" x2="19" y2="20" strokeWidth="2.5"/></svg>
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/><line x1="4" y1="20" x2="20" y2="20" strokeWidth="2.5"/></svg>
 }
 function StopAnimIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="4" height="16" rx="1.5"/><rect x="15" y="4" width="4" height="16" rx="1.5"/></svg>
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="5" y="4" width="4" height="16" rx="1.5"/><rect x="15" y="4" width="4" height="16" rx="1.5"/></svg>
 }
 function FontReadIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
 }
 function LineHIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/><polyline points="8 3 5 6 8 9" /><polyline points="8 21 5 18 8 15"/></svg>
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/><polyline points="8 3 5 6 8 9"/><polyline points="8 21 5 18 8 15"/></svg>
 }
-function ResetSizeIcon() {
-  return <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="2" y="17" fontSize="13" fontWeight="700" fontFamily="Arial">Aa</text></svg>
+function LetterSpacingIcon() {
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="1" y="16" fontSize="11" fontWeight="700" fontFamily="Arial" letterSpacing="3">A B</text><line x1="2" y1="20" x2="22" y2="20" stroke="currentColor" strokeWidth="1.5"/></svg>
+}
+function DyslexiaIcon() {
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="1" y="17" fontSize="14" fontWeight="700" fontFamily="'Comic Sans MS', cursive">dy</text></svg>
+}
+function ReadingGuideIcon() {
+  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><line x1="2" y1="12" x2="22" y2="12"/><rect x="2" y="9" width="20" height="6" rx="2" fill="currentColor" opacity="0.2" stroke="none"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
 }

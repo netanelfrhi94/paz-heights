@@ -236,6 +236,25 @@ body.a11y-line-height li,
 body.a11y-line-height span,
 body.a11y-line-height div { line-height: 2.2 !important; }
 
+/* Letter spacing (WCAG 1.4.12) */
+body.a11y-letter-spacing p,
+body.a11y-letter-spacing li,
+body.a11y-letter-spacing span,
+body.a11y-letter-spacing h1,
+body.a11y-letter-spacing h2,
+body.a11y-letter-spacing h3,
+body.a11y-letter-spacing button,
+body.a11y-letter-spacing a { letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }
+
+/* Dyslexia font */
+body.a11y-dyslexia-font,
+body.a11y-dyslexia-font * {
+  font-family: 'Verdana', 'Tahoma', Geneva, sans-serif !important;
+  letter-spacing: 0.08em !important;
+  word-spacing: 0.18em !important;
+  line-height: 1.9 !important;
+}
+
 /* ════════════════════════════════════════════════ */
 
 /* Architectural divider */

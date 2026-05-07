@@ -5,7 +5,7 @@ const PHONE = '053-523-0998'
 const WA    = '0535230998'
 
 // הדביקו כאן את כתובת ה-Web App של Google Apps Script לאחר ההגדרה
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycby4ZXHxeQnt9HwbKucyOpUD0FIYaLyficsqEludibqefLisa4JrUrjMecDwpUGYycOs/exec'
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzwi-UOGsvm_CuoLPldi61YZr8dNuaKUO9A_FDB61ycMOutqjsiR40x1H8UxIyS5hzPew/exec'
 
 const types = ['מחסן', 'משרד', 'קליניקה', 'בנייה קלה', 'שיפוץ', 'אחר']
 const areas = ['מרכז', 'שפלה', 'דרום']

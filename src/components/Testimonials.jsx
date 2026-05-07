@@ -93,7 +93,6 @@ export default function Testimonials() {
           className="mt-14 pt-8 border-t border-white/6"
         >
           <p className="text-sm text-pg-mute">
-            כל הביקורות אמיתיות — לקוחות שסיימו פרויקט עם פז גבהים ·{' '}
             <a href="#lead" className="text-pg-gold hover:text-pg-goldHi transition-colors">
               הצטרפו אליהם ←
             </a>

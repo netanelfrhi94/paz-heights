@@ -159,11 +159,12 @@ export default function Accessibility() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.97 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed z-[59] overflow-hidden"
+            className="fixed z-[59] flex flex-col"
             style={{
-              bottom: 172,
+              bottom: 160,
               left: 16,
               width: 300,
+              maxHeight: 'calc(100vh - 180px)',
               borderRadius: 16,
               background: '#ffffff',
               boxShadow: '0 20px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.15)',
@@ -186,7 +187,7 @@ export default function Accessibility() {
             </div>
 
             {/* Grid of options */}
-            <div className="p-3 max-h-[60vh] overflow-y-auto" style={{ background: '#f8f9fa' }}>
+            <div className="p-3 overflow-y-auto flex-1" style={{ background: '#f8f9fa' }}>
               <div className="grid grid-cols-2 gap-2">
                 {GRID_OPTIONS.map((opt) => {
                   const active = !!prefs[opt.id]

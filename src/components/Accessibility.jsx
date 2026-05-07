@@ -326,19 +326,28 @@ export default function Accessibility() {
 /* ─── Floating button icon ─── */
 function WheelchairIcon() {
   return (
-    <svg width="38" height="38" viewBox="0 0 100 100" aria-hidden="true">
-      {/* White outer ring */}
-      <circle cx="50" cy="50" r="46" fill="none" stroke="white" strokeWidth="6" />
+    <svg width="32" height="32" viewBox="0 0 100 120" fill="white" aria-hidden="true">
       {/* Head */}
-      <circle cx="50" cy="20" r="8.5" fill="white" />
-      {/* Torso */}
-      <rect x="46.5" y="30" width="7" height="15" rx="3.5" fill="white" />
-      {/* Arms — full width horizontal bar */}
-      <path d="M12 43 H88" stroke="white" strokeWidth="7.5" strokeLinecap="round" />
-      {/* Left leg */}
-      <path d="M50 45 L28 80" stroke="white" strokeWidth="7.5" strokeLinecap="round" />
-      {/* Right leg */}
-      <path d="M50 45 L72 80" stroke="white" strokeWidth="7.5" strokeLinecap="round" />
+      <circle cx="65" cy="10" r="10" />
+      {/* Torso leaning forward */}
+      <path d="M65 22 C65 22 55 30 50 48 L72 48 L72 22 Z" />
+      {/* Arm extended forward */}
+      <path d="M68 30 L82 30 L82 38 L68 38 Z" rx="3" />
+      {/* Wheelchair back */}
+      <rect x="30" y="35" width="7" height="32" rx="3" />
+      {/* Seat */}
+      <rect x="30" y="46" width="28" height="7" rx="3" />
+      {/* Footrest */}
+      <path d="M30 67 L18 67 L18 74" stroke="white" strokeWidth="6" strokeLinecap="round" fill="none" />
+      {/* Large rear wheel */}
+      <circle cx="60" cy="84" r="24" fill="none" stroke="white" strokeWidth="7" />
+      {/* Wheel hub */}
+      <circle cx="60" cy="84" r="4" />
+      {/* Wheel spokes */}
+      <line x1="60" y1="60" x2="60" y2="108" stroke="white" strokeWidth="3" />
+      <line x1="36" y1="84" x2="84" y2="84" stroke="white" strokeWidth="3" />
+      {/* Small front wheel */}
+      <circle cx="22" cy="86" r="9" fill="none" stroke="white" strokeWidth="6" />
     </svg>
   )
 }

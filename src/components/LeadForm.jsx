@@ -40,17 +40,13 @@ function openWhatsApp(form) {
 async function sendToSheets(form) {
   if (SHEET_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') return
   try {
-    await fetch(SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: JSON.stringify({
-        name:  form.name,
-        phone: form.phone,
-        type:  form.type  || '—',
-        area:  form.area  || '—',
-        date:  new Date().toLocaleString('he-IL'),
-      }),
-    })
+    const url = new URL(SHEET_URL)
+    url.searchParams.set('name',  form.name)
+    url.searchParams.set('phone', form.phone)
+    url.searchParams.set('type',  form.type  || '—')
+    url.searchParams.set('area',  form.area  || '—')
+    url.searchParams.set('date',  new Date().toLocaleString('he-IL'))
+    await fetch(url.toString(), { method: 'GET', mode: 'no-cors' })
   } catch (_) {}
 }
 

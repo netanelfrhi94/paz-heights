@@ -355,29 +355,23 @@ export default function Accessibility() {
 /* ── Icons ── */
 function WheelchairIcon() {
   return (
-    <svg width="28" height="28" viewBox="0 0 100 100" fill="white" aria-hidden="true">
+    <svg width="30" height="30" viewBox="0 0 64 64" fill="white" aria-hidden="true">
       {/* Head */}
-      <circle cx="52" cy="14" r="10" />
-      {/* Body leaning forward */}
-      <path d="M52 26 C52 26 38 36 35 52 L55 52 L68 70 L78 64 L63 44 L63 30 Z" />
-      {/* Arm extended with laptop */}
-      <path d="M63 30 L82 26 L84 34 L66 38 Z" />
-      {/* Laptop screen */}
-      <rect x="82" y="18" width="14" height="10" rx="2" />
-      <line x1="82" y1="28" x2="96" y2="28" stroke="white" strokeWidth="2"/>
+      <circle cx="36" cy="7" r="5.5" />
+      {/* Torso */}
+      <path d="M36 13 L36 30 L24 30 L24 36 L40 36 L40 13 Z" />
+      {/* Arm */}
+      <path d="M36 18 L46 18 L46 22 L38 22" />
+      {/* Seat back */}
+      <rect x="22" y="28" width="4" height="18" rx="1.5" />
       {/* Seat */}
-      <path d="M35 52 L35 58 L60 58 L60 52 Z" />
-      {/* Small front wheel */}
-      <circle cx="30" cy="72" r="8" fill="none" stroke="white" strokeWidth="5" />
+      <rect x="22" y="34" width="18" height="4" rx="1.5" />
+      {/* Footrest */}
+      <path d="M22 46 L14 46 L14 50 L22 50" strokeWidth="3.5" stroke="white" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
       {/* Large rear wheel */}
-      <circle cx="68" cy="82" r="16" fill="none" stroke="white" strokeWidth="6" />
-      {/* Wheel spokes */}
-      <line x1="68" y1="66" x2="68" y2="98" stroke="white" strokeWidth="2.5"/>
-      <line x1="52" y1="82" x2="84" y2="82" stroke="white" strokeWidth="2.5"/>
-      <line x1="57" y1="71" x2="79" y2="93" stroke="white" strokeWidth="2.5"/>
-      <line x1="79" y1="71" x2="57" y2="93" stroke="white" strokeWidth="2.5"/>
-      {/* Foot rest */}
-      <path d="M35 58 L25 68 L32 68" strokeWidth="4" stroke="white" fill="none" strokeLinecap="round"/>
+      <circle cx="38" cy="50" r="12" fill="none" stroke="white" strokeWidth="4" />
+      {/* Small front wheel */}
+      <circle cx="18" cy="52" r="5" fill="none" stroke="white" strokeWidth="3.5" />
     </svg>
   )
 }

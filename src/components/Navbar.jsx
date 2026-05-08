@@ -66,24 +66,15 @@ export default function Navbar() {
         <div className="container-lg flex items-center justify-between px-5 md:px-12 py-4">
 
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3.5 group">
+          <a href="#" className="flex items-center group">
             <div className="relative">
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="shrink-0">
-                <rect x="1" y="1" width="34" height="34" rx="9" stroke="#C9A24B" strokeWidth="0.75" opacity="0.5"/>
-                <rect x="7"  y="21" width="3.5" height="8"  fill="#C9A24B"/>
-                <rect x="13" y="15" width="3.5" height="14" fill="#C9A24B"/>
-                <rect x="19" y="8"  width="3.5" height="21" fill="#C9A24B"/>
-                <rect x="25" y="15" width="3.5" height="14" fill="#C9A24B" opacity="0.4"/>
-              </svg>
-              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              <img
+                src="/images/logo.jpeg"
+                alt="פז גבהים"
+                className="h-14 w-14 object-contain rounded-full transition-opacity duration-300 group-hover:opacity-90"
+              />
+              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ boxShadow: '0 0 24px rgba(201,162,75,0.3)' }} />
-            </div>
-            <div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-[17px] font-extrabold text-pg-text leading-none tracking-tight group-hover:text-pg-goldHi transition-colors duration-300">פז גבהים</span>
-                <span className="text-[9px] font-semibold text-pg-mute tracking-[0.15em] hidden sm:inline">EST. 2012</span>
-              </div>
-              <div className="text-[8px] text-pg-gold/70 font-bold tracking-[0.25em] mt-1 uppercase">Build · Elevate</div>
             </div>
           </a>
 

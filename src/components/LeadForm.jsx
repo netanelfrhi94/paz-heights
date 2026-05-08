@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { trackWAClick, trackPhoneClick, trackLeadFormSubmit } from '../utils/gtm'
 
 const PHONE = '053-523-0998'
 const WA    = '0535230998'
@@ -68,6 +69,7 @@ export default function LeadForm() {
     const errs = validate(form)
     if (Object.keys(errs).length) { setErrors(errs); return }
     setErrors({})
+    trackLeadFormSubmit({ type: form.type, area: form.area })
     openWhatsApp(form)
     sendToSheets(form)
     setSubmitted(true)
@@ -144,6 +146,7 @@ export default function LeadForm() {
             <div className="flex flex-wrap gap-4 pt-8 border-t border-white/8">
               <a
                 href={`tel:${PHONE}`}
+                onClick={() => trackPhoneClick('lead_form')}
                 className="inline-flex items-center gap-2.5 text-sm text-pg-text hover:text-pg-gold transition-colors group"
               >
                 <div className="w-8 h-8 rounded-full bg-pg-gold/10 flex items-center justify-center group-hover:bg-pg-gold/20 transition-colors">
@@ -153,6 +156,7 @@ export default function LeadForm() {
               </a>
               <a
                 href={`https://wa.me/972${WA}`}
+                onClick={() => trackWAClick('lead_form')}
                 className="inline-flex items-center gap-2.5 text-sm text-pg-text hover:text-[#25D366] transition-colors group"
               >
                 <div className="w-8 h-8 rounded-full bg-[#25D366]/10 flex items-center justify-center group-hover:bg-[#25D366]/20 transition-colors">

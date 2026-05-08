@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SectionTitle } from './WhyUs'
+import { trackFAQOpen } from '../utils/gtm'
 
 const items = [
   { q: 'כמה זמן לוקח פרויקט?',             a: 'תלוי בגודל ובמורכבות. מחסן פנל מבודד סטנדרטי — 2–3 שבועות מהזמנה למסירה. שיפוץ דירה — 4–8 שבועות. בהצעת המחיר תקבלו לוח זמנים מחייב, בכתב.' },
@@ -26,7 +27,12 @@ export default function FAQ() {
           {items.map((it, i) => (
             <div key={i}>
               <button
-                onClick={() => setOpen(open === i ? -1 : i)}
+                onClick={() => {
+                  const isOpening = open !== i
+                  setOpen(isOpening ? i : -1)
+                  // Track only when opening (not closing)
+                  if (isOpening) trackFAQOpen({ question: it.q, index: i })
+                }}
                 className="w-full text-right py-6 flex items-center justify-between gap-6 group"
               >
                 <span className="text-base md:text-lg font-semibold text-pg-text group-hover:text-pg-goldHi transition-colors tracking-tight">

@@ -1,5 +1,6 @@
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
+import { trackCTAClick } from '../utils/gtm'
 
 const items = [
   { n: '01', t: 'אחריות בכתב',         d: 'כל פרויקט מסופק עם אחריות מלאה ומסמך התחייבות חתום. אם משהו לא תקין — אנחנו חוזרים ומתקנים, על חשבוננו.' },
@@ -71,10 +72,18 @@ export default function WhyUs() {
             צפו בפרויקטים שביצענו או בואו לשוחח איתנו ישירות.
           </p>
           <div className="flex gap-3 shrink-0">
-            <a href="#gallery" className="px-5 py-2.5 rounded-lg border border-white/12 text-pg-text text-sm font-semibold hover:border-pg-gold/40 transition-colors">
+            <a
+              href="#gallery"
+              onClick={() => trackCTAClick({ source: 'why_us', destination: 'gallery', text: 'לפרויקטים' })}
+              className="px-5 py-2.5 rounded-lg border border-white/12 text-pg-text text-sm font-semibold hover:border-pg-gold/40 transition-colors"
+            >
               לפרויקטים
             </a>
-            <a href="#lead" className="px-5 py-2.5 rounded-lg bg-pg-gold text-[#1A1305] text-sm font-bold hover:bg-pg-goldHi transition-colors shadow-[0_4px_20px_rgba(201,162,75,0.25)]">
+            <a
+              href="#lead"
+              onClick={() => trackCTAClick({ source: 'why_us', destination: 'lead', text: 'לייעוץ חינמי' })}
+              className="px-5 py-2.5 rounded-lg bg-pg-gold text-[#1A1305] text-sm font-bold hover:bg-pg-goldHi transition-colors shadow-[0_4px_20px_rgba(201,162,75,0.25)]"
+            >
               לייעוץ חינמי
             </a>
           </div>

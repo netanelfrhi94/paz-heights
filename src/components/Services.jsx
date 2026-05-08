@@ -1,6 +1,7 @@
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
 import { SectionTitle } from './WhyUs'
+import { trackCTAClick } from '../utils/gtm'
 
 const services = [
   { t: 'מחסנים מפנל מבודד', d: 'מחסנים חקלאיים, תעשייתיים ופרטיים בכל גודל. בידוד תרמי-אקוסטי מלא, עמידות מקסימלית.', tag: 'הכי מבוקש' },
@@ -30,6 +31,7 @@ export default function Services() {
             <motion.a
               key={s.t}
               href="#lead"
+              onClick={() => trackCTAClick({ source: 'services', destination: 'lead', text: s.t })}
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}

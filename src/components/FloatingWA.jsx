@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { trackWAClick } from '../utils/gtm'
 
 const WA = '0535230998'
 
@@ -18,6 +19,7 @@ export default function FloatingWA() {
           href={`https://wa.me/972${WA}`}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackWAClick('floating_button')}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0 }}

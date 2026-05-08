@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { trackWAClick, trackPhoneClick, trackCTAClick } from '../utils/gtm'
 
 const PHONE = '053-523-0998'
 const WA    = '0535230998'
@@ -40,7 +41,11 @@ export default function Navbar() {
               <div className="flex items-center gap-3 text-[#1A1305] text-[11px] font-semibold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#1A1305]/50 animate-pulse shrink-0" />
                 <span>3 פרויקטים פנויים לחודש הקרוב — הזדמנות מוגבלת</span>
-                <a href="#lead" className="hidden sm:inline opacity-70 hover:opacity-100 transition-opacity border-b border-[#1A1305]/40 pb-px">
+                <a
+                  href="#lead"
+                  onClick={() => trackCTAClick({ source: 'banner', destination: 'lead', text: 'קבעו ייעוץ עכשיו' })}
+                  className="hidden sm:inline opacity-70 hover:opacity-100 transition-opacity border-b border-[#1A1305]/40 pb-px"
+                >
                   קבעו ייעוץ עכשיו
                 </a>
               </div>
@@ -96,6 +101,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-2.5">
             <a
               href={`https://wa.me/972${WA}`}
+              onClick={() => trackWAClick('navbar')}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366]/8 border border-[#25D366]/20 text-[#25D366] text-[13px] font-semibold hover:bg-[#25D366]/15 transition-all duration-200"
             >
               <WADot />
@@ -103,6 +109,7 @@ export default function Navbar() {
             </a>
             <a
               href={`tel:${PHONE}`}
+              onClick={() => trackPhoneClick('navbar')}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-pg-gold text-[#1A1305] text-[13px] font-bold hover:bg-pg-goldHi transition-colors duration-200"
               style={{ boxShadow: '0 2px 12px rgba(201,162,75,0.25)' }}
             >
@@ -165,12 +172,14 @@ export default function Navbar() {
                 <div className="flex gap-2 mt-5">
                   <a
                     href={`tel:${PHONE}`}
+                    onClick={() => trackPhoneClick('navbar')}
                     className="flex-1 text-center py-3 rounded-lg bg-pg-gold text-[#1A1305] font-bold text-sm"
                   >
                     התקשרו
                   </a>
                   <a
                     href={`https://wa.me/972${WA}`}
+                    onClick={() => trackWAClick('navbar')}
                     className="flex-1 text-center py-3 rounded-lg bg-[#25D366] text-[#072B17] font-bold text-sm"
                   >
                     וואטסאפ

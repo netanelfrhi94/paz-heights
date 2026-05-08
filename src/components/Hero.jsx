@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { trackWAClick, trackPhoneClick, trackCTAClick } from '../utils/gtm'
 
 const PHONE = '053-523-0998'
 const WA    = '0535230998'
@@ -99,6 +100,7 @@ export default function Hero() {
             {/* 1 — Phone (gold shimmer) */}
             <a
               href={`tel:${PHONE}`}
+              onClick={() => trackPhoneClick('hero')}
               className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl btn-shimmer text-[#1A1305] font-bold text-[15px] shadow-[0_8px_32px_rgba(201,162,75,0.45)] hover:shadow-[0_16px_48px_rgba(201,162,75,0.6)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
             >
               <PhoneIcon />
@@ -111,6 +113,7 @@ export default function Hero() {
               href={`https://wa.me/972${WA}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackWAClick('hero')}
               className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl bg-[#25D366] text-[#072B17] font-bold text-[15px] shadow-[0_8px_28px_rgba(37,211,102,0.35)] hover:shadow-[0_14px_40px_rgba(37,211,102,0.5)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
             >
               <WAIcon />
@@ -120,6 +123,7 @@ export default function Hero() {
             {/* 3 — Free consultation (ghost) */}
             <a
               href="#lead"
+              onClick={() => trackCTAClick({ source: 'hero', destination: 'lead', text: 'לייעוץ חינמי' })}
               className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl border border-white/20 text-pg-text font-semibold text-[15px] backdrop-blur-sm bg-white/[0.06] hover:border-white/35 hover:bg-white/[0.10] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
             >
               לייעוץ חינמי

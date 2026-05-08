@@ -1,3 +1,5 @@
+import { trackWAClick, trackPhoneClick, trackCTAClick } from '../utils/gtm'
+
 const PHONE = '053-523-0998'
 const WA    = '0535230998'
 
@@ -37,6 +39,7 @@ export default function Footer() {
             <div className="pb-2">
               <a
                 href="#lead"
+                onClick={() => trackCTAClick({ source: 'footer', destination: 'lead', text: 'לייעוץ חינמי' })}
                 className="inline-flex items-center gap-2.5 px-6 py-3 rounded-lg bg-pg-gold text-[#1A1305] font-bold text-[13px] hover:bg-pg-goldHi transition-colors shadow-[0_4px_20px_rgba(201,162,75,0.2)]"
               >
                 לייעוץ חינמי ←
@@ -89,6 +92,7 @@ export default function Footer() {
             <h5 className="text-[10px] text-pg-mute/60 tracking-[0.2em] uppercase mb-5 font-semibold">צרו קשר</h5>
             <a
               href={`tel:${PHONE}`}
+              onClick={() => trackPhoneClick('footer')}
               className="block text-[13px] text-pg-text hover:text-pg-gold transition-colors mb-3 tracking-wide"
               dir="ltr"
             >
@@ -96,11 +100,16 @@ export default function Footer() {
             </a>
             <a
               href={`https://wa.me/972${WA}`}
+              onClick={() => trackWAClick('footer')}
               className="block text-[13px] text-pg-dim hover:text-pg-gold transition-colors mb-3 tracking-wide"
             >
               וואטסאפ — זמין 24/7
             </a>
-            <a href="#lead" className="block text-[13px] text-pg-dim hover:text-pg-gold transition-colors tracking-wide">
+            <a
+              href="#lead"
+              onClick={() => trackCTAClick({ source: 'footer', destination: 'lead', text: 'השאירו פרטים' })}
+              className="block text-[13px] text-pg-dim hover:text-pg-gold transition-colors tracking-wide"
+            >
               השאירו פרטים ←
             </a>
           </div>

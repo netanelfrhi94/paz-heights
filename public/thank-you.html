@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תודה רבה — פז גבהים</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Assistant', sans-serif;
+      background: #0A0E14;
+      color: #F4F5F7;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Glow background */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(201,162,75,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      background: #161C26;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 56px 48px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 40px 100px -20px rgba(0,0,0,0.7);
+    }
+
+    /* Animated checkmark */
+    .check-wrap {
+      width: 80px;
+      height: 80px;
+      background: rgba(201,162,75,0.1);
+      border: 1.5px solid rgba(201,162,75,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes pop {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .check-wrap svg {
+      width: 36px;
+      height: 36px;
+      stroke: #C9A24B;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      animation: draw 0.5s 0.3s ease forwards;
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+    }
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #C9A24B;
+      margin-bottom: 16px;
+      animation: fadeUp 0.5s 0.2s ease both;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: #F4F5F7;
+      margin-bottom: 12px;
+      animation: fadeUp 0.5s 0.3s ease both;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      color: #8A919E;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fadeUp 0.5s 0.4s ease both;
+    }
+
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, #C9A24B, rgba(201,162,75,0.2));
+      border-radius: 2px;
+      margin: 0 auto 40px;
+      animation: fadeUp 0.5s 0.45s ease both;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: #C9A24B;
+      color: #1A1305;
+      font-family: 'Assistant', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 8px 30px rgba(201,162,75,0.3);
+      animation: fadeUp 0.5s 0.5s ease both;
+    }
+    .back-btn:hover {
+      background: #D4AE5C;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(201,162,75,0.4);
+    }
+    .back-btn:active { transform: translateY(0); }
+
+    /* Logo watermark */
+    .watermark {
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.025;
+      pointer-events: none;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 40px 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- Watermark logo -->
+    <svg class="watermark" width="300" height="180" viewBox="0 0 360 200" fill="none">
+      <rect x="40"  y="120" width="40" height="60"  fill="#C9A24B"/>
+      <rect x="100" y="90"  width="40" height="90"  fill="#C9A24B"/>
+      <rect x="160" y="50"  width="40" height="130" fill="#C9A24B"/>
+      <rect x="220" y="90"  width="40" height="90"  fill="#C9A24B"/>
+      <rect x="280" y="120" width="40" height="60"  fill="#C9A24B"/>
+    </svg>
+
+    <!-- Animated checkmark -->
+    <div class="check-wrap">
+      <svg viewBox="0 0 24 24">
+        <polyline points="4 12 9 17 20 7"/>
+      </svg>
+    </div>
+
+    <p class="label">פז גבהים</p>
+
+    <h1>ההודעה נשלחה<br>והתקבלה</h1>
+
+    <div class="divider"></div>
+
+    <p class="subtitle">
+      נחזור אליכם בהקדם.<br>
+      <strong style="color:#F4F5F7;">!תודה רבה</strong>
+    </p>
+
+    <a href="/" class="back-btn">
+      ← חזרה לאתר
+    </a>
+
+  </div>
+</body>
+</html>

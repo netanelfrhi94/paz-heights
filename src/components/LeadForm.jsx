@@ -19,24 +19,6 @@ function validate(form) {
   return errors
 }
 
-function openWhatsApp(form) {
-  const msg = [
-    '👋 פנייה חדשה מהאתר — פז גבהים',
-    '',
-    `*שם:* ${form.name}`,
-    `*טלפון:* ${form.phone}`,
-    form.type ? `*סוג פרויקט:* ${form.type}` : '',
-    form.area ? `*אזור:* ${form.area}` : '',
-  ].filter(Boolean).join('\n')
-
-  const a = document.createElement('a')
-  a.href = `https://wa.me/972${WA}?text=${encodeURIComponent(msg)}`
-  a.target = '_blank'
-  a.rel = 'noopener noreferrer'
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-}
 
 async function sendToSheets(form) {
   if (SHEET_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') return
@@ -70,9 +52,8 @@ export default function LeadForm() {
     if (Object.keys(errs).length) { setErrors(errs); return }
     setErrors({})
     trackLeadFormSubmit({ type: form.type, area: form.area })
-    openWhatsApp(form)
     sendToSheets(form)
-    setSubmitted(true)
+    window.location.href = '/thank-you'
   }
 
   return (
@@ -267,7 +248,7 @@ export default function LeadForm() {
                     className="mt-2 py-4 rounded-xl btn-shimmer text-[#1A1305] font-extrabold text-base shadow-[0_12px_40px_rgba(201,162,75,0.4)] hover:shadow-[0_20px_50px_rgba(201,162,75,0.55)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group"
                   >
                     <span className="flex items-center justify-center gap-2">
-                      שלחו — ונחזור תוך 30 דקות
+                      שלחו — נחזור אליכם בהקדם
                       <svg className="w-4 h-4 group-hover:translate-x-[-3px] transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </span>
                   </button>
